@@ -1,6 +1,9 @@
+using Asp.Versioning;
+using Asp.Versioning.Builder;
 using Pedidos.Adapters.DependencyInjection;
 using Pedidos.Api.Clientes;
 using Pedidos.Api.Configurations;
+using Pedidos.Api.Endpoints;
 using Pedidos.Api.Middlewares;
 using Pedidos.Api.Pedidos;
 using Pedidos.Api.Produtos.Endpoints;
@@ -16,6 +19,7 @@ builder.Services
     .ConfigureObservability()
     .ConfigureJsonSerialization()
     .ConfigureOpenApi()
+    .ConfigureApiVersioning()
     .ConfigureSecurity();
 
 builder.Services
@@ -30,9 +34,19 @@ var app = builder.Build();
 
 app.UseMiddleware<IdempotencyMiddleware>();
 
-app.AddEndPointProdutos();
-app.AddEndpointPedidos();
-app.AddEndpointClientes();
+var apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
+
+var group = app
+    .MapGroup("v{version:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+
+
+app.AddEndPointProdutos(group);
+app.AddEndpointPedidos(group);
+app.AddEndpointClientes(group);
 
 app.ConfigureUseSwagger("FastOrder Pedidos API")
     .ConfigureUseSecurity()

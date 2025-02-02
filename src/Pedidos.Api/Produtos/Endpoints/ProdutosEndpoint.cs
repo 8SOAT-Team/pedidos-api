@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Asp.Versioning.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Produtos;
 using Pedidos.Adapters.Types.Results;
@@ -11,12 +12,12 @@ namespace Pedidos.Api.Produtos.Endpoints;
 
 public static class ProdutosEndpoint
 {
-    public static void AddEndPointProdutos(this WebApplication app)
+    public static void AddEndPointProdutos(this WebApplication app, RouteGroupBuilder group)
     {
         const string produtoTag = "Produto";
         const string categoriaTag = "Produto:Categoria";
 
-        app.MapGet("/produto", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
+        group.MapGet("/produto", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IProdutoController controller) =>
             {
                 var produtos = await controller.GetAllProdutosAsync();
@@ -28,7 +29,7 @@ public static class ProdutosEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithOpenApi();
 
-        app.MapPost("/produto",
+        group.MapPost("/produto",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                     [FromServices] IProdutoController controller, [FromBody] NovoProdutoDto request) =>
                 {
@@ -41,7 +42,7 @@ public static class ProdutosEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithOpenApi();
 
-        app.MapGet("/produto/categoria/{categoria}",
+        group.MapGet("/produto/categoria/{categoria}",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                     [FromServices] IProdutoController controller, [FromRoute] ProdutoCategoria categoria) =>
                 {
@@ -55,7 +56,7 @@ public static class ProdutosEndpoint
             .WithOpenApi();
 
 
-        app.MapGet("/produto/{id:guid}",
+        group.MapGet("/produto/{id:guid}",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey, [FromRoute] Guid id,
                     [FromServices] IProdutoController controller) =>
                 {

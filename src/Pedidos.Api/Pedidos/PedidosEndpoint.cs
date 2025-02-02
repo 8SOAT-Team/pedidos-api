@@ -11,11 +11,11 @@ namespace Pedidos.Api.Pedidos;
 
 public static class PedidosEndpoint
 {
-    public static void AddEndpointPedidos(this WebApplication app)
+    public static void AddEndpointPedidos(this WebApplication app, RouteGroupBuilder group)
     {
         const string pedidoTag = "Pedido";
 
-        app.MapPost("/pedido", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
+        group.MapPost("/pedido", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IPedidoController pedidoController,
                 [FromBody] NovoPedidoDto request,
                 HttpContext httpContext) =>
@@ -34,9 +34,9 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Crie um pedido informando os itens.")
-            .WithOpenApi();
+            .WithOpenApi();;
 
-        app.MapGet("/pedido/{id:guid}",
+        group.MapGet("/pedido/{id:guid}",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                     [FromServices] IPedidoController pedidoController, [FromRoute] Guid id) =>
                 {
@@ -47,9 +47,9 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Obtenha um pedido")
-            .WithOpenApi();
+            .WithOpenApi();;
 
-        app.MapGet("/pedido",
+        group.MapGet("/pedido",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                     [FromServices] IPedidoController pedidoController) =>
                 {
@@ -60,9 +60,9 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Liste pedidos")
-            .WithOpenApi();
+            .WithOpenApi();;
 
-        app.MapGet("/pedido/status", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
+        group.MapGet("/pedido/status", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IPedidoController pedidoController) =>
             {
                 var pedidos = await pedidoController.GetAllPedidosPending();
@@ -72,15 +72,14 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Lista de pedidos Pendentes (Pronto > Em Preparação > Recebido)")
-            .WithOpenApi();
+            .WithOpenApi();;
 
-        app.MapPut("/pedido/{id:guid}/status", async (
+        group.MapPut("/pedido/{id:guid}/status", async (
                 [FromHeader(Name = Constants.IdempotencyHeaderKey)]
                 Guid? idempotencyKey,
                 [FromServices] IPedidoController pedidoController,
                 [FromRoute] Guid id,
-                [FromBody] AtualizarStatusDoPedidoDto request,
-                HttpContext httpContext) =>
+                [FromBody] AtualizarStatusDoPedidoDto request) =>
             {
                 var result = await pedidoController.AtualizarStatusDePreparacaoDoPedido(request.NovoStatus, id);
                 return result.GetResult();

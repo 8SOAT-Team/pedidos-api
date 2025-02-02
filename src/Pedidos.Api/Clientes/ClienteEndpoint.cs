@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
+using Asp.Versioning.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Clientes;
 using Pedidos.Adapters.Controllers.Clientes.Dtos;
@@ -11,11 +12,11 @@ namespace Pedidos.Api.Clientes;
 
 public static class ClienteEndpoint
 {
-    public static void AddEndpointClientes(this WebApplication app)
+    public static void AddEndpointClientes(this WebApplication app, RouteGroupBuilder group)
     {
         const string endpointTag = "Clientes";
 
-        app.MapGet("/cliente", async (
+        group.MapGet("/cliente", async (
                 [FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IClienteController controller,
                 [FromQuery, Required] string cpf) =>
@@ -30,7 +31,7 @@ public static class ClienteEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithOpenApi();
 
-        app.MapPost("/cliente", async (
+        group.MapPost("/cliente", async (
                 [FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IClienteController controller,
                 [FromBody] NovoClienteDto request) =>
