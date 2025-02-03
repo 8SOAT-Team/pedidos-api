@@ -1,5 +1,4 @@
 ﻿using CleanArch.UseCase.Options;
-using Microsoft.Extensions.Logging;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Apps.UseCases;
 using Pedidos.Domain.Produtos.Entities;

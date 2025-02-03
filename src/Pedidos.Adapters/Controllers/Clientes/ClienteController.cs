@@ -13,8 +13,8 @@ namespace Pedidos.Adapters.Controllers.Clientes;
 
 internal class ClienteController : IClienteController
 {
-    private readonly ILoggerFactory _loggerFactory;
     private readonly IClienteGateway _clienteGateway;
+    private readonly ILoggerFactory _loggerFactory;
 
     public ClienteController(ILoggerFactory loggerFactory, IClienteGateway clienteGateway)
     {
@@ -27,20 +27,18 @@ internal class ClienteController : IClienteController
         var isCpfValid = Cpf.TryCreate(document, out var cpf);
 
         if (isCpfValid is false)
-        {
             return Result<ClienteIdentificadoDto>.Failure(new AppBadRequestProblemDetails("Cpf inválido", document));
-        }
 
-        var useCase = new IdentificarClienteUseCase(_loggerFactory.CreateLogger<IdentificarClienteUseCase>(), _clienteGateway);
+        var useCase =
+            new IdentificarClienteUseCase(_loggerFactory.CreateLogger<IdentificarClienteUseCase>(), _clienteGateway);
 
         var useCaseResult = await useCase.ResolveAsync(cpf);
 
         if (useCase.IsFailure)
-        {
             return Result<ClienteIdentificadoDto>.Failure(useCase.GetErrors().AdaptUseCaseErrors().ToList());
-        }
 
-        return useCaseResult.HasValue ? Result<ClienteIdentificadoDto>.Succeed(ClientePresenter.AdaptClienteIdentificado(useCaseResult.Value!))
+        return useCaseResult.HasValue
+            ? Result<ClienteIdentificadoDto>.Succeed(ClientePresenter.AdaptClienteIdentificado(useCaseResult.Value!))
             : Result<ClienteIdentificadoDto>.Empty();
     }
 
@@ -54,26 +52,21 @@ internal class ClienteController : IClienteController
         {
             var errors = new List<AppProblemDetails>();
 
-            if (!isCpfValid)
-            {
-                errors.Add(new AppBadRequestProblemDetails("Cpf inválido", newCliente.Cpf));
-            }
+            if (!isCpfValid) errors.Add(new AppBadRequestProblemDetails("Cpf inválido", newCliente.Cpf));
 
-            if (!isEmailvalid)
-            {
-                errors.Add(new AppBadRequestProblemDetails("Email inválido", newCliente.Email));
-            }
+            if (!isEmailvalid) errors.Add(new AppBadRequestProblemDetails("Email inválido", newCliente.Email));
 
             return Result<ClienteIdentificadoDto>.Failure(errors);
         }
 
-        var useCase = new CriarNovoClienteUseCase(_loggerFactory.CreateLogger<CriarNovoClienteUseCase>(), _clienteGateway);
+        var useCase =
+            new CriarNovoClienteUseCase(_loggerFactory.CreateLogger<CriarNovoClienteUseCase>(), _clienteGateway);
         var useCaseResult = await useCase.ResolveAsync(new CriarNovoClienteDto(cpf, newCliente.Nome, email));
 
         return ControllerResultBuilder<ClienteIdentificadoDto, Cliente>
-           .ForUseCase(useCase)
-           .WithResult(useCaseResult)
-           .AdaptUsing(ClientePresenter.AdaptClienteIdentificado)
-           .Build();
+            .ForUseCase(useCase)
+            .WithResult(useCaseResult)
+            .AdaptUsing(ClientePresenter.AdaptClienteIdentificado)
+            .Build();
     }
 }

@@ -14,6 +14,6 @@ public class SetVersionInPath : IDocumentFilter
             updatedPaths.Add(newPath, path.Value);
         }
 
-        swaggerDoc.Paths = updatedPaths; 
+        swaggerDoc.Paths = updatedPaths;
     }
 }

@@ -5,6 +5,7 @@ using Pedidos.Domain.Clientes.Entities;
 using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Infrastructure.Databases.EntityMapping;
+
 internal class ClienteTypeConfiguration : IEntityTypeConfiguration<Cliente>
 {
     public void Configure(EntityTypeBuilder<Cliente> builder)

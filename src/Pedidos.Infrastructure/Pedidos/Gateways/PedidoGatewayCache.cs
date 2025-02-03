@@ -6,19 +6,21 @@ namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
 public record PedidoKey(Guid? Id = null);
 
-public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cache) : CacheGateway<PedidoKey>(cache: cache), IPedidoGateway
+public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cache)
+    : CacheGateway<PedidoKey>(cache), IPedidoGateway
 {
-
     private readonly ICacheContext _cache = cache;
 
-    protected override Dictionary<string, Func<PedidoKey,(string cacheKey, bool InvalidateCacheOnChanges)>> CacheKeys => new()
+    protected override Dictionary<string, Func<PedidoKey, (string cacheKey, bool InvalidateCacheOnChanges)>>
+        CacheKeys => new()
     {
         [nameof(GetAllAsync)] = _ => ($"{nameof(PedidoGatewayCache)}:{nameof(GetAllAsync)}", true),
         [nameof(GetAllPedidosPending)] = _ => ($"{nameof(PedidoGatewayCache)}:{nameof(GetAllPedidosPending)}", true),
         [nameof(GetByIdAsync)] = p => ($"{nameof(PedidoGatewayCache)}:{nameof(GetByIdAsync)}:{p.Id}", true),
-        [nameof(GetPedidoCompletoAsync)] = p => ($"{nameof(PedidoGatewayCache)}:{nameof(GetPedidoCompletoAsync)}:{p.Id}", false),
-        [nameof(CreateAsync)] = p =>($"{nameof(Pedido)}:{p.Id}", false),
-        [nameof(UpdateAsync)] = p =>($"{nameof(Pedido)}:{p.Id}", false)
+        [nameof(GetPedidoCompletoAsync)] =
+            p => ($"{nameof(PedidoGatewayCache)}:{nameof(GetPedidoCompletoAsync)}:{p.Id}", false),
+        [nameof(CreateAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false),
+        [nameof(UpdateAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false)
     };
 
 
@@ -51,7 +53,7 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
         var pedidoKey = new PedidoKey(pedidoAtualizado.Id);
         var getKey = CacheKeys[nameof(UpdateAsync)];
         var (cacheKey, _) = getKey(pedidoKey);
-        
+
         await InvalidateCacheOnChange(pedidoKey);
         await _cache.SetNotNullStringByKeyAsync(cacheKey, pedidoAtualizado);
 
@@ -66,10 +68,7 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
 
         var result = await _cache.GetItemByKeyAsync<List<Pedido>>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value!;
-        }
+        if (result.HasValue) return result.Value!;
 
         var item = await nextExecution.GetAllAsync();
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -85,10 +84,7 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
 
         var result = await _cache.GetItemByKeyAsync<List<Pedido>>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value!;
-        }
+        if (result.HasValue) return result.Value!;
 
         var item = await nextExecution.GetAllPedidosPending();
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -103,10 +99,7 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
         var (cacheKey, _) = getKey(pedidoKey);
         var result = await _cache.GetItemByKeyAsync<Pedido>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
+        if (result.HasValue) return result.Value;
 
         var item = await nextExecution.GetByIdAsync(id);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -121,10 +114,7 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
         var (cacheKey, _) = getKey(pedidoKey);
         var result = await _cache.GetItemByKeyAsync<Pedido>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
+        if (result.HasValue) return result.Value;
 
         var item = await nextExecution.GetPedidoCompletoAsync(id);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);

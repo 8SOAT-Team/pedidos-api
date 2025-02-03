@@ -4,7 +4,7 @@ using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Infrastructure.Databases.EntityMapping;
 
-public class ItensDoPedidoTypeConfiguration: IEntityTypeConfiguration<ItemDoPedido>
+public class ItensDoPedidoTypeConfiguration : IEntityTypeConfiguration<ItemDoPedido>
 {
     public void Configure(EntityTypeBuilder<ItemDoPedido> builder)
     {
@@ -14,6 +14,5 @@ public class ItensDoPedidoTypeConfiguration: IEntityTypeConfiguration<ItemDoPedi
         builder.Property(i => i.PedidoId).IsRequired();
         builder.HasOne(i => i.Produto).WithMany().HasForeignKey(i => i.ProdutoId);
         builder.HasOne(i => i.Pedido).WithMany(p => p.ItensDoPedido).HasForeignKey(i => i.PedidoId);
-    
     }
 }

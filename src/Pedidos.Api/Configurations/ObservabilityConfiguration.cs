@@ -13,11 +13,11 @@ public static class ObservabilityConfiguration
                 .Async(config => config.Console())
                 .CreateLogger());
         });
-        
+
         services.AddHealthChecks();
         return services;
     }
-    
+
     public static IApplicationBuilder ConfigureMapHealthChecks(this IApplicationBuilder app)
     {
         app.UseHealthChecks("/health");

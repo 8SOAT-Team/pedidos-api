@@ -21,16 +21,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Pedidos.Adapters\Pedidos.Adapters.csproj" />
-      <ProjectReference Include="..\..\src\Pedidos.Api\Pedidos.Api.csproj" />
-      <ProjectReference Include="..\..\src\Pedidos.Apps\Pedidos.Apps.csproj" />
-      <ProjectReference Include="..\..\src\Pedidos.Domain\Pedidos.Domain.csproj" />
+        <ProjectReference Include="..\..\src\Pedidos.Adapters\Pedidos.Adapters.csproj"/>
+        <ProjectReference Include="..\..\src\Pedidos.Api\Pedidos.Api.csproj"/>
+        <ProjectReference Include="..\..\src\Pedidos.Apps\Pedidos.Apps.csproj"/>
+        <ProjectReference Include="..\..\src\Pedidos.Domain\Pedidos.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="BDD\" />
-      <Folder Include="IntegrationTests\" />
-      <Folder Include="UnitTests\" />
+        <Folder Include="BDD\"/>
+        <Folder Include="IntegrationTests\"/>
+        <Folder Include="UnitTests\"/>
     </ItemGroup>
 
 </Project>

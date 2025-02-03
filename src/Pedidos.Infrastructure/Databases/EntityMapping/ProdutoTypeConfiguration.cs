@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pedidos.Domain.Produtos.Entities;
 
 namespace Pedidos.Infrastructure.Databases.EntityMapping;
+
 internal class ProdutoTypeConfiguration : IEntityTypeConfiguration<Produto>
 {
     public void Configure(EntityTypeBuilder<Produto> builder)

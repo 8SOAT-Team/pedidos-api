@@ -9,5 +9,4 @@ public record NovoProdutoDto
     public decimal Preco { get; init; }
     public string Imagem { get; init; } = null!;
     public ProdutoCategoria Categoria { get; init; }
-
 }

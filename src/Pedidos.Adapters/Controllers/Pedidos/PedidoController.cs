@@ -29,7 +29,7 @@ public class PedidoController(
         var useCase =
             new AtualizarStatusDePreparoPedidoUseCase(_logger.CreateLogger<AtualizarStatusDePreparoPedidoUseCase>(),
                 _pedidoGateway);
-        var useCaseResult = await useCase.ResolveAsync(new NovoStatusDePedidoDto()
+        var useCaseResult = await useCase.ResolveAsync(new NovoStatusDePedidoDto
         {
             NovoStatus = novoStatus,
             PedidoId = pedidoId
@@ -47,10 +47,10 @@ public class PedidoController(
     {
         var useCase = new CriarNovoPedidoUseCase(_logger.CreateLogger<CriarNovoPedidoUseCase>(), _pedidoGateway,
             _produtoGateway);
-        var useCaseResult = await useCase.ResolveAsync(new NovoPedido()
+        var useCaseResult = await useCase.ResolveAsync(new NovoPedido
         {
             ClienteId = pedido.ClienteId,
-            ItensDoPedido = pedido.ItensDoPedido.Select(i => new ItemDoPedido()
+            ItensDoPedido = pedido.ItensDoPedido.Select(i => new ItemDoPedido
             {
                 ProdutoId = i.ProdutoId,
                 Quantidade = i.Quantidade
@@ -78,21 +78,23 @@ public class PedidoController(
 
     public async Task<Result<List<PedidoDto>>> GetAllPedidosPending()
     {
-        var useCase = new ObterListaPedidosPendentesUseCase(_logger.CreateLogger<ObterListaPedidosPendentesUseCase>(), _pedidoGateway);
+        var useCase = new ObterListaPedidosPendentesUseCase(_logger.CreateLogger<ObterListaPedidosPendentesUseCase>(),
+            _pedidoGateway);
         var useCaseResult = await useCase.ResolveAsync(Any<object>.Empty);
-    
+
         return ControllerResultBuilder<List<PedidoDto>, List<Pedido>>
             .ForUseCase(useCase)
             .WithResult(useCaseResult)
             .AdaptUsing(PedidoPresenter.ToListPedidoDto)
             .Build();
     }
-    
+
     public async Task<Result<PedidoDto>> GetPedidoByIdAsync(Guid id)
     {
-        var useCase = new EncontrarPedidoPorIdUseCase(_logger.CreateLogger<EncontrarPedidoPorIdUseCase>(), _pedidoGateway);
+        var useCase =
+            new EncontrarPedidoPorIdUseCase(_logger.CreateLogger<EncontrarPedidoPorIdUseCase>(), _pedidoGateway);
         var useCaseResult = await useCase.ResolveAsync(id);
-    
+
         return ControllerResultBuilder<PedidoDto, Pedido>
             .ForUseCase(useCase)
             .WithResult(useCaseResult)

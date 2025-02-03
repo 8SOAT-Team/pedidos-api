@@ -1,5 +1,5 @@
 using Asp.Versioning;
-using Asp.Versioning.Builder;
+using DotNetEnv;
 using Pedidos.Adapters.DependencyInjection;
 using Pedidos.Api.Clientes;
 using Pedidos.Api.Configurations;
@@ -11,7 +11,7 @@ using Pedidos.Api.Services;
 using Pedidos.CrossCutting;
 using Pedidos.Infrastructure.DependencyInjection;
 
-DotNetEnv.Env.TraversePath().Load();
+Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,9 +52,6 @@ app.ConfigureUseSwagger("FastOrder Pedidos API")
     .ConfigureUseSecurity()
     .ConfigureMapHealthChecks();
 
-if (EnvConfig.RunMigrationsOnStart)
-{
-    await app.ExecuteMigrationAsync();
-}
+if (EnvConfig.RunMigrationsOnStart) await app.ExecuteMigrationAsync();
 
 app.Run();

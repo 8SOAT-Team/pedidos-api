@@ -6,10 +6,7 @@ public static class ResultExtension
 {
     public static IResult GetResult<T>(this Result<T> result)
     {
-        if (result.IsFailure)
-        {
-            return result.GetFailureResult();
-        }
+        if (result.IsFailure) return result.GetFailureResult();
 
         return result.HasValue ? Results.Ok(result.Value) : Results.NotFound();
     }

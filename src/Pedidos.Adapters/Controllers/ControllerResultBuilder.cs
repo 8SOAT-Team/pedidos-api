@@ -9,17 +9,18 @@ namespace Pedidos.Adapters.Controllers;
 public class ControllerResultBuilder<TResultValue, TEntity>
 {
     private const UseCaseErrorType BadRequest = UseCaseErrorType.BadRequest;
+
+    private readonly bool _isFailure;
+    private readonly UseCaseError? _useCaseError;
+    private Func<TEntity, TResultValue>? _adapt;
+    private string? _instance;
+    private Any<TEntity>? _useCaseResult;
+
     private ControllerResultBuilder(IUseCase useCase)
     {
         _isFailure = useCase.IsFailure;
         _useCaseError = useCase.GetErrors().FirstOrDefault();
     }
-
-    private readonly bool _isFailure;
-    private readonly UseCaseError? _useCaseError;
-    private Any<TEntity>? _useCaseResult;
-    private string? _instance;
-    private Func<TEntity, TResultValue>? _adapt;
 
     public static ControllerResultBuilder<TResultValue, TEntity> ForUseCase(IUseCase useCase)
     {
@@ -28,24 +29,21 @@ public class ControllerResultBuilder<TResultValue, TEntity>
 
     public ControllerResultBuilder<TResultValue, TEntity> WithResult(Any<TEntity> useCaseResult)
     {
-        if (_isFailure)
-        {
-            return this;
-        }
+        if (_isFailure) return this;
 
         _useCaseResult = useCaseResult;
 
         return this;
     }
 
-    public ControllerResultBuilder<TResultValue, TEntity> WithInstance(Guid instance) => WithInstance(instance.ToString());
+    public ControllerResultBuilder<TResultValue, TEntity> WithInstance(Guid instance)
+    {
+        return WithInstance(instance.ToString());
+    }
 
     public ControllerResultBuilder<TResultValue, TEntity> WithInstance(string instance = null!)
     {
-        if (!_isFailure)
-        {
-            _instance = instance;
-        }
+        if (!_isFailure) _instance = instance;
 
         return this;
     }
@@ -59,14 +57,12 @@ public class ControllerResultBuilder<TResultValue, TEntity>
     public Result<TResultValue> Build()
     {
         if (_isFailure)
-        {
-            return _useCaseError!.Code == BadRequest ?
-                Result<TResultValue>.Failure(new AppBadRequestProblemDetails(_useCaseError.Description, _instance!))
+            return _useCaseError!.Code == BadRequest
+                ? Result<TResultValue>.Failure(new AppBadRequestProblemDetails(_useCaseError.Description, _instance!))
                 : Result<TResultValue>.Failure(_useCaseError.AdaptUseCaseError());
-        }
 
-        return _useCaseResult!.HasValue ?
-            Result<TResultValue>.Succeed(_adapt!(_useCaseResult.Value!))
+        return _useCaseResult!.HasValue
+            ? Result<TResultValue>.Succeed(_adapt!(_useCaseResult.Value!))
             : Result<TResultValue>.Empty();
     }
 }

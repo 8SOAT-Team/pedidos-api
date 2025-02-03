@@ -13,11 +13,13 @@ public class Result<TValue>
         ProblemDetails = details;
     }
 
-    private Result() { }
+    private Result()
+    {
+    }
 
-    public TValue? Value { get; private init; }
+    public TValue? Value { get; }
 
-    public List<AppProblemDetails> ProblemDetails { get; private init; } = [];
+    public List<AppProblemDetails> ProblemDetails { get; } = [];
 
     public bool IsFailure => ProblemDetails.Count > 0;
 
@@ -25,10 +27,25 @@ public class Result<TValue>
 
     public bool HasValue { get; }
 
-    public static Result<TValue> Succeed(TValue value) => new(value);
-    public static Result<TValue> Failure(AppProblemDetails details) => new([details]);
-    public static Result<TValue> Failure(List<AppProblemDetails> details) => new(details);
-    public static Result<TValue> Empty() => new();
+    public static Result<TValue> Succeed(TValue value)
+    {
+        return new Result<TValue>(value);
+    }
+
+    public static Result<TValue> Failure(AppProblemDetails details)
+    {
+        return new Result<TValue>([details]);
+    }
+
+    public static Result<TValue> Failure(List<AppProblemDetails> details)
+    {
+        return new Result<TValue>(details);
+    }
+
+    public static Result<TValue> Empty()
+    {
+        return new Result<TValue>();
+    }
 }
 
 public static class ResultExtension

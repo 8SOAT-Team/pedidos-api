@@ -4,17 +4,21 @@ using Pedidos.Domain.Exceptions;
 using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Domain.Clientes.Entities;
+
 public class Cliente : Entity, IAggregateRoot
 {
-    protected Cliente() { }
+    protected Cliente()
+    {
+    }
 
-    public virtual Cpf Cpf { get; private init; } = null!;
-    public string Nome { get; private set; } = null!;
-    public virtual EmailAddress Email { get; private set; } = null!;
+    public Cliente(string cpf, string nome, string email) : this(Guid.NewGuid(), cpf, nome, email)
+    {
+    }
 
-    public Cliente(string cpf, string nome, string email) : this(Guid.NewGuid(), cpf, nome, email) { }
-
-    public Cliente(Guid id, string cpf, string nome, string email) : this(id, new Cpf(cpf), nome, new EmailAddress(email)) { }
+    public Cliente(Guid id, string cpf, string nome, string email) : this(id, new Cpf(cpf), nome,
+        new EmailAddress(email))
+    {
+    }
 
     [JsonConstructor]
     public Cliente(Guid id, Cpf cpf, string nome, EmailAddress email)
@@ -27,6 +31,10 @@ public class Cliente : Entity, IAggregateRoot
         Nome = nome;
         Email = email;
     }
+
+    public virtual Cpf Cpf { get; private init; } = null!;
+    public string Nome { get; private set; } = null!;
+    public virtual EmailAddress Email { get; private set; } = null!;
 
     public void ChangeNome(string nome)
     {

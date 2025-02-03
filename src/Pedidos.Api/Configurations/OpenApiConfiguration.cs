@@ -15,11 +15,12 @@ public static class OpenApiConfiguration
             options.OperationFilter<RemoveVersionParameter>();
             options.DocumentFilter<SetVersionInPath>();
         });
-        
+
         return services;
     }
-    
-    public static IApplicationBuilder ConfigureUseSwagger(this IApplicationBuilder app, string apiName, string routePrefix = "docs")
+
+    public static IApplicationBuilder ConfigureUseSwagger(this IApplicationBuilder app, string apiName,
+        string routePrefix = "docs")
     {
         app.UseSwagger();
 
@@ -28,9 +29,9 @@ public static class OpenApiConfiguration
             options.SwaggerEndpoint("/swagger/v1/swagger.json", apiName);
             options.RoutePrefix = string.Empty;
             options.DisplayOperationId();
-            options.DisplayRequestDuration(); 
+            options.DisplayRequestDuration();
         });
-        
+
         return app;
     }
 }

@@ -15,11 +15,14 @@ internal static class ProdutoPresenter
             Descricao = produto.Descricao,
             Preco = produto.Preco,
             Imagem = produto.Imagem,
-            Categoria = (ProdutoCategoria)produto.Categoria,
+            Categoria = (ProdutoCategoria)produto.Categoria
         };
     }
 
-    public static ICollection<ProdutoDto> AdaptProduto(ICollection<Produto> produtos) => produtos.Select(AdaptProduto).ToList();
+    public static ICollection<ProdutoDto> AdaptProduto(ICollection<Produto> produtos)
+    {
+        return produtos.Select(AdaptProduto).ToList();
+    }
 
     public static ProdutoDto AdaptProduto(Produto produto)
     {
@@ -30,7 +33,7 @@ internal static class ProdutoPresenter
             Descricao = produto.Descricao,
             Preco = produto.Preco,
             Imagem = produto.Imagem,
-            Categoria = (ProdutoCategoria)produto.Categoria,
+            Categoria = (ProdutoCategoria)produto.Categoria
         };
     }
 }

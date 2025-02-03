@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CleanArch.UseCase" Version="1.0.18-beta-gfac92f9b14" />
-      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="CleanArch.UseCase" Version="1.0.18-beta-gfac92f9b14"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Pedidos.Domain\Pedidos.Domain.csproj" />
+        <ProjectReference Include="..\Pedidos.Domain\Pedidos.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

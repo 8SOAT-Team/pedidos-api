@@ -13,17 +13,20 @@ internal static class PedidoPresenter
             DataPedido = pedido.DataPedido,
             StatusPedido = pedido.StatusPedido,
             // Cliente = pedido.Cliente is null ? null : ClientePresenter.AdaptCliente(pedido.Cliente!),
-            ItensDoPedido = pedido.ItensDoPedido.Select(p => new ItemDoPedidoDto()
+            ItensDoPedido = pedido.ItensDoPedido.Select(p => new ItemDoPedidoDto
             {
                 Id = p.Id,
                 ProdutoId = p.ProdutoId,
                 Quantidade = p.Quantidade,
                 Imagem = p.Produto?.Imagem!
             }).ToList(),
-            ValorTotal = pedido.ValorTotal,
+            ValorTotal = pedido.ValorTotal
             // Pagamento = pedido.Pagamento is null ? null : PagamentoPresenter.ToPagamentoDTO(pedido.Pagamento)
         };
     }
 
-    public static List<PedidoDto> ToListPedidoDto(this List<Pedido> pedidos) => pedidos.Select(p => p.ToPedidoDto()).ToList();
+    public static List<PedidoDto> ToListPedidoDto(this List<Pedido> pedidos)
+    {
+        return pedidos.Select(p => p.ToPedidoDto()).ToList();
+    }
 }

@@ -23,7 +23,7 @@ public class RequestGateway(ICacheContext cacheContext) : IRequestGateway
     {
         await cacheContext.SetStringByKeyAsync(string.Format(RequestKey, requestName),
             JsonSerializer.Serialize(response), 300);
-        
+
         return response;
     }
 }

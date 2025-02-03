@@ -2,6 +2,7 @@
 using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Apps.Clientes.Gateways;
+
 public interface IClienteGateway
 {
     Task<Cliente?> GetClienteByCpfAsync(Cpf cpf);

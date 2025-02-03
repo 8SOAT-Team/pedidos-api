@@ -3,7 +3,6 @@ using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
 
-
 namespace Pedidos.Apps.Pedidos.UseCases;
 
 public class ListarTodosPedidosUseCase(ILogger<ListarTodosPedidosUseCase> logger, IPedidoGateway pedidoGateway)

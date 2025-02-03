@@ -5,19 +5,28 @@ namespace Pedidos.Domain.ValueObjects;
 
 public record EmailAddress
 {
-    public string Address { get; private init; } = null!;
-
     public EmailAddress(string address)
     {
         DomainExceptionValidation.When<InvalidEmailArgumentException>(IsValidEmail(address) is false);
         Address = address;
     }
 
-    public override int GetHashCode() => Address.GetHashCode();
+    public string Address { get; } = null!;
 
-    public override string? ToString() => Address;
+    public override int GetHashCode()
+    {
+        return Address.GetHashCode();
+    }
 
-    private static bool IsValidEmail(string email) => string.IsNullOrEmpty(email) is false && Expression.ValidEmail().IsMatch(email);
+    public override string? ToString()
+    {
+        return Address;
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        return string.IsNullOrEmpty(email) is false && Expression.ValidEmail().IsMatch(email);
+    }
 
     public static bool TryCreate(string email, out EmailAddress result)
     {
@@ -32,5 +41,8 @@ public record EmailAddress
         return false;
     }
 
-    public static implicit operator string(EmailAddress email) => email.Address;
+    public static implicit operator string(EmailAddress email)
+    {
+        return email.Address;
+    }
 }

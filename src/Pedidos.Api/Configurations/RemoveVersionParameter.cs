@@ -10,9 +10,6 @@ public class RemoveVersionParameter : IOperationFilter
         var versionParameter = operation.Parameters
             .FirstOrDefault(p => p.Name == "version");
 
-        if (versionParameter != null)
-        {
-            operation.Parameters.Remove(versionParameter);
-        }
+        if (versionParameter != null) operation.Parameters.Remove(versionParameter);
     }
 }

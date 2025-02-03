@@ -23,7 +23,7 @@ public static class GatewayService
             .DecorateIf<IPedidoGateway, PedidoGatewayCache>(() => !EnvConfig.IsTestEnv);
 
         services.AddSingleton<IRequestGateway, RequestGateway>();
-        
+
         return services;
     }
 }

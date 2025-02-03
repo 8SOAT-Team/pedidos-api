@@ -7,13 +7,16 @@ namespace Pedidos.Infrastructure.Clientes.Gateways;
 
 public record ClienteKey(string? Cpf = null);
 
-public class ClienteGatewayCache(IClienteGateway nextExecution, ICacheContext cache) : CacheGateway<ClienteKey>(cache), IClienteGateway
+public class ClienteGatewayCache(IClienteGateway nextExecution, ICacheContext cache)
+    : CacheGateway<ClienteKey>(cache), IClienteGateway
 {
     private readonly ICacheContext _cache = cache;
 
-    protected override Dictionary<string, Func<ClienteKey, (string cacheKey, bool InvalidateCacheOnChanges)>> CacheKeys => new()
+    protected override Dictionary<string, Func<ClienteKey, (string cacheKey, bool InvalidateCacheOnChanges)>>
+        CacheKeys => new()
     {
-        [nameof(GetClienteByCpfAsync)] = c => ($"{nameof(ClienteGatewayCache)}:{nameof(GetClienteByCpfAsync)}:{c.Cpf}", false),
+        [nameof(GetClienteByCpfAsync)] =
+            c => ($"{nameof(ClienteGatewayCache)}:{nameof(GetClienteByCpfAsync)}:{c.Cpf}", false)
     };
 
     public async Task<Cliente?> GetClienteByCpfAsync(Cpf cpf)
@@ -23,10 +26,7 @@ public class ClienteGatewayCache(IClienteGateway nextExecution, ICacheContext ca
 
         var result = await _cache.GetItemByKeyAsync<Cliente>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
+        if (result.HasValue) return result.Value;
 
         var client = await nextExecution.GetClienteByCpfAsync(cpf);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, client);

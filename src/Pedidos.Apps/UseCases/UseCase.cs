@@ -1,7 +1,6 @@
 ﻿using CleanArch.UseCase;
 using CleanArch.UseCase.Faults;
 using CleanArch.UseCase.Options;
-using Microsoft.Extensions.Logging;
 using Pedidos.Domain.Exceptions;
 
 namespace Pedidos.Apps.UseCases;
@@ -33,7 +32,7 @@ public abstract class UseCase<TLogContext, TCommand, TOut>(ILogger<TLogContext> 
         catch (DomainExceptionValidation dev)
         {
             AddError(new UseCaseError(UseCaseErrorType.BadRequest, dev.Message));
-            Logger.LogError("Domain Exception {mensagem} {innerException}",dev.Message, dev.InnerException);
+            Logger.LogError("Domain Exception {mensagem} {innerException}", dev.Message, dev.InnerException);
         }
         catch (Exception ex)
         {

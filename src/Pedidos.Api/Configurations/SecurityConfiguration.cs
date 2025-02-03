@@ -7,7 +7,7 @@ public static class SecurityConfiguration
         services.AddCors();
         return services;
     }
-    
+
     public static IApplicationBuilder ConfigureUseSecurity(this IApplicationBuilder app)
     {
         app.UseCors(builder =>
@@ -16,7 +16,7 @@ public static class SecurityConfiguration
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
-        
+
         return app;
     }
 }

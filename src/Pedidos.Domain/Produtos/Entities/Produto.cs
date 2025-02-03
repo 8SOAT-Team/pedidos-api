@@ -7,12 +7,6 @@ namespace Pedidos.Domain.Produtos.Entities;
 
 public class Produto : Entity, IAggregateRoot
 {
-    public string Nome { get; private set; } = null!;
-    public string Descricao { get; private set; } = null!;
-    public decimal Preco { get; private set; }
-    public ProdutoCategoria Categoria { get; set; }
-    public string Imagem { get; private set; } = null!;
-
     protected Produto()
     {
     }
@@ -35,6 +29,12 @@ public class Produto : Entity, IAggregateRoot
         Imagem = imagem;
         Categoria = categoria;
     }
+
+    public string Nome { get; private set; } = null!;
+    public string Descricao { get; private set; } = null!;
+    public decimal Preco { get; private set; }
+    public ProdutoCategoria Categoria { get; set; }
+    public string Imagem { get; private set; } = null!;
 
     private static void ValidationDomain(string nome, string descricao, decimal preco, string imagem,
         ProdutoCategoria categoria)

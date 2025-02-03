@@ -2,6 +2,7 @@
 using Pedidos.Adapters.Types.Results;
 
 namespace Pedidos.Adapters.Controllers.Clientes;
+
 public interface IClienteController
 {
     Task<Result<ClienteIdentificadoDto>> IdentificarClienteAsync(string document);

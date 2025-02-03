@@ -2,7 +2,10 @@
 
 public abstract class CacheGateway<TEntity>(ICacheContext cache)
 {
-    protected abstract Dictionary<string, Func<TEntity, (string cacheKey, bool InvalidateCacheOnChanges)>> CacheKeys { get; }
+    protected abstract Dictionary<string, Func<TEntity, (string cacheKey, bool InvalidateCacheOnChanges)>> CacheKeys
+    {
+        get;
+    }
 
     protected Task InvalidateCacheOnChange(TEntity target)
     {

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
-using Asp.Versioning.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Clientes;
 using Pedidos.Adapters.Controllers.Clientes.Dtos;
@@ -17,9 +16,10 @@ public static class ClienteEndpoint
         const string endpointTag = "Clientes";
 
         group.MapGet("/cliente", async (
-                [FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
+                [FromHeader(Name = Constants.IdempotencyHeaderKey)]
+                Guid? idempotencyKey,
                 [FromServices] IClienteController controller,
-                [FromQuery, Required] string cpf) =>
+                [FromQuery] [Required] string cpf) =>
             {
                 var useCaseResult = await controller.IdentificarClienteAsync(cpf);
                 return useCaseResult.GetResult();
@@ -32,7 +32,8 @@ public static class ClienteEndpoint
             .WithOpenApi();
 
         group.MapPost("/cliente", async (
-                [FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
+                [FromHeader(Name = Constants.IdempotencyHeaderKey)]
+                Guid? idempotencyKey,
                 [FromServices] IClienteController controller,
                 [FromBody] NovoClienteDto request) =>
             {

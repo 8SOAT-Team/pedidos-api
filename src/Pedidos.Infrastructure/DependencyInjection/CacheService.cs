@@ -1,5 +1,4 @@
-﻿using Pedidos.Adapters.DependencyInjection;
-using Pedidos.Adapters.Gateways.Caches;
+﻿using Pedidos.Adapters.Gateways.Caches;
 using Pedidos.CrossCutting;
 using Pedidos.Infrastructure.Databases;
 using StackExchange.Redis;

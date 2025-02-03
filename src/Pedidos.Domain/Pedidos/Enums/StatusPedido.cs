@@ -1,4 +1,5 @@
 ﻿namespace Pedidos.Domain.Pedidos.Enums;
+
 public enum StatusPedido
 {
     Recebido = 1,

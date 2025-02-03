@@ -25,5 +25,8 @@ public class ClienteDto
     [EmailAddress(ErrorMessage = "Formato do email inválido")]
     public string Email { get; set; } = null!;
 
-    public void SetId(Guid id) => ClienteId = id;
+    public void SetId(Guid id)
+    {
+        ClienteId = id;
+    }
 }

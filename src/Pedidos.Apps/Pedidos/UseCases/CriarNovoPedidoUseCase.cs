@@ -1,5 +1,4 @@
 ﻿using CleanArch.UseCase.Faults;
-using Microsoft.Extensions.Logging;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
@@ -38,5 +37,7 @@ public class CriarNovoPedidoUseCase(
     }
 
     private static ItemDoPedido MapItemDoPedido(ItemDoPedidoDto itemDoPedidoDTO, Guid pedidoId, Produto produto)
-        => new(pedidoId, produto, itemDoPedidoDTO.Quantidade);
+    {
+        return new ItemDoPedido(pedidoId, produto, itemDoPedidoDTO.Quantidade);
+    }
 }

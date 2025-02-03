@@ -7,13 +7,19 @@ namespace Pedidos.Domain.Pedidos.Entities;
 
 public class ItemDoPedido : Entity
 {
-    private ItemDoPedido() { }
+    private ItemDoPedido()
+    {
+    }
 
     public ItemDoPedido(Guid pedidoId, Guid produtoId, int quantidade) : this(Guid.NewGuid(), pedidoId, produtoId,
-        quantidade) { }
+        quantidade)
+    {
+    }
 
     public ItemDoPedido(Guid pedidoId, Produto produto, int quantidade) : this(Guid.NewGuid(), pedidoId, produto,
-        quantidade) { }
+        quantidade)
+    {
+    }
 
     [JsonConstructor]
     public ItemDoPedido(Guid id, Guid pedidoId, Produto produto, int quantidade)

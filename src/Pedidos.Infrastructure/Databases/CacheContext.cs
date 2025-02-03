@@ -15,10 +15,7 @@ public class CacheContext(IConnectionMultiplexer connectionMultiplexer, JsonSeri
     {
         var item = await _database.StringGetAsync(key);
 
-        if (item == RedisValue.Null)
-        {
-            return Result<T>.Empty();
-        }
+        if (item == RedisValue.Null) return Result<T>.Empty();
 
         var deserialized = item.ToString().TryDeserialize<T>(jsonOptions);
 
@@ -27,17 +24,11 @@ public class CacheContext(IConnectionMultiplexer connectionMultiplexer, JsonSeri
 
     public async Task<Result<T>> SetNotNullStringByKeyAsync<T>(string key, T value, int expireInSec = 3600)
     {
-        if (value is null)
-        {
-            return Result<T>.Empty();
-        }
+        if (value is null) return Result<T>.Empty();
 
         var result = await SetStringByKeyAsync(key, JsonSerializer.Serialize(value, jsonOptions), expireInSec);
 
-        if (result.IsSucceed)
-        {
-            return Result<T>.Succeed(value);
-        }
+        if (result.IsSucceed) return Result<T>.Succeed(value);
 
         return Result<T>.Failure(new AppProblemDetails("Não foi possível gravar em cache", "internal_server_error",
             "Verifique os logs", key));
@@ -57,10 +48,7 @@ public class CacheContext(IConnectionMultiplexer connectionMultiplexer, JsonSeri
         {
             var item = await _database.StringGetAsync(key);
 
-            if (item != RedisValue.Null)
-            {
-                await _database.KeyDeleteAsync(key);
-            }
+            if (item != RedisValue.Null) await _database.KeyDeleteAsync(key);
 
             return Result<string>.Empty();
         }

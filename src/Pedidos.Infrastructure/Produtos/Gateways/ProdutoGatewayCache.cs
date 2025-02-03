@@ -25,7 +25,7 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
             ($"{nameof(ProdutoGatewayCache)}:{nameof(ListarProdutosByIdAsync)}:{p.Id}", false),
         [nameof(ListarTodosProdutosAsync)] = _ =>
             ($"{nameof(ProdutoGatewayCache)}:{nameof(ListarTodosProdutosAsync)}", true),
-        [nameof(CreateProdutoAsync)] = p => ($"{nameof(Produto)}:{p.Id}", false),
+        [nameof(CreateProdutoAsync)] = p => ($"{nameof(Produto)}:{p.Id}", false)
     };
 
     public async Task<Produto> CreateProdutoAsync(Produto produto)
@@ -47,13 +47,10 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
         var prodKey = new ProdutoKey(id);
         var getKey = CacheKeys[nameof(GetProdutoByIdAsync)];
         var (cacheKey, _) = getKey(prodKey);
-        
+
         var result = await _cache.GetItemByKeyAsync<Produto>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
+        if (result.HasValue) return result.Value;
 
         var item = await nextExecution.GetProdutoByIdAsync(id);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -69,10 +66,7 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
 
         var result = await _cache.GetItemByKeyAsync<Produto>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
+        if (result.HasValue) return result.Value;
 
         var item = await nextExecution.GetProdutoByIdAsync(id);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -88,10 +82,7 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
 
         var result = await _cache.GetItemByKeyAsync<ICollection<Produto>>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value!;
-        }
+        if (result.HasValue) return result.Value!;
 
         var item = await nextExecution.GetProdutosByCategoriaAsync(categoria);
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);
@@ -99,8 +90,10 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
         return item;
     }
 
-    public Task<ICollection<Produto>> ListarProdutosByIdAsync(ICollection<Guid> ids) =>
-        nextExecution.ListarProdutosByIdAsync(ids);
+    public Task<ICollection<Produto>> ListarProdutosByIdAsync(ICollection<Guid> ids)
+    {
+        return nextExecution.ListarProdutosByIdAsync(ids);
+    }
 
     public async Task<ICollection<Produto>> ListarTodosProdutosAsync()
     {
@@ -110,10 +103,7 @@ public class ProdutoGatewayCache(IProdutoGateway nextExecution, ICacheContext ca
 
         var result = await _cache.GetItemByKeyAsync<ICollection<Produto>>(cacheKey);
 
-        if (result.HasValue)
-        {
-            return result.Value!;
-        }
+        if (result.HasValue) return result.Value!;
 
         var item = await nextExecution.ListarTodosProdutosAsync();
         _ = await _cache.SetNotNullStringByKeyAsync(cacheKey, item);

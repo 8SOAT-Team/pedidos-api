@@ -6,18 +6,18 @@ namespace Pedidos.Infrastructure.Extensions;
 
 public static class JsonSerializerExtension
 {
-    public static Result<T> TryDeserialize<T>([StringSyntax(StringSyntaxAttribute.Json)] this string jsonDocument, JsonSerializerOptions? jsonOptions = null)
+    public static Result<T> TryDeserialize<T>([StringSyntax(StringSyntaxAttribute.Json)] this string jsonDocument,
+        JsonSerializerOptions? jsonOptions = null)
     {
         try
         {
             var document = JsonSerializer.Deserialize<T>(jsonDocument, jsonOptions);
 
-            if (document is not null)
-            {
-                return Result<T>.Succeed(document);
-            }
+            if (document is not null) return Result<T>.Succeed(document);
         }
-        catch (Exception) { }
+        catch (Exception)
+        {
+        }
 
         return Result<T>.Empty();
     }

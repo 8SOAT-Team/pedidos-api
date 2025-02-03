@@ -4,9 +4,9 @@ namespace Pedidos.Api.Middlewares;
 
 public class IdempotencyMiddleware
 {
+    private readonly ILogger<IdempotencyMiddleware> _logger;
     private readonly RequestDelegate _next;
     private readonly IRequestGateway _requestGateway;
-    private readonly ILogger<IdempotencyMiddleware> _logger;
 
     public IdempotencyMiddleware(RequestDelegate next, IRequestGateway requestGateway,
         ILogger<IdempotencyMiddleware> logger)
@@ -46,10 +46,7 @@ public class IdempotencyMiddleware
         var responseBody = await new StreamReader(memoryStream).ReadToEndAsync();
         memoryStream.Seek(0, SeekOrigin.Begin);
 
-        if (statusCode is >= 200 and < 300)
-        {
-            await _requestGateway.CacheResponse(requestId.ToString(), responseBody);
-        }
+        if (statusCode is >= 200 and < 300) await _requestGateway.CacheResponse(requestId.ToString(), responseBody);
 
         await memoryStream.CopyToAsync(originalBodyStream);
     }

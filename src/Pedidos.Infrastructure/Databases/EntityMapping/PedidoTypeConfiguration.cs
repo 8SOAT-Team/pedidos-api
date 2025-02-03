@@ -4,6 +4,7 @@ using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Infrastructure.Databases.EntityMapping;
+
 internal class PedidoTypeConfiguration : IEntityTypeConfiguration<Pedido>
 {
     public void Configure(EntityTypeBuilder<Pedido> builder)
@@ -14,8 +15,7 @@ internal class PedidoTypeConfiguration : IEntityTypeConfiguration<Pedido>
         builder.Property(p => p.ValorTotal).HasPrecision(18, 2);
         builder.Property(p => p.ClienteId).IsRequired(false);
         builder.Property(p => p.StatusPedido)
-              .HasConversion(fromObj => Convert.ToInt32(fromObj), fromDb => (StatusPedido)fromDb);
+            .HasConversion(fromObj => Convert.ToInt32(fromObj), fromDb => (StatusPedido)fromDb);
         // builder.HasOne(p => p.Cliente).WithMany().HasForeignKey(p => p.ClienteId);
     }
 }
-

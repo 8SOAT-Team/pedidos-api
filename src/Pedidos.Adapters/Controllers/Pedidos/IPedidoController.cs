@@ -3,6 +3,7 @@ using Pedidos.Adapters.Types.Results;
 using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Adapters.Controllers.Pedidos;
+
 public interface IPedidoController
 {
     Task<Result<PedidoDto>> GetPedidoByIdAsync(Guid id);

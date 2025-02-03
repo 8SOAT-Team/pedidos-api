@@ -1,6 +1,7 @@
 ﻿using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Apps.Pedidos.Gateways;
+
 public interface IPedidoGateway
 {
     Task<Pedido?> GetByIdAsync(Guid id);

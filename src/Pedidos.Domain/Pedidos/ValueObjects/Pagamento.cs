@@ -8,7 +8,10 @@ public class Pagamento
     public string? IdExterno { get; private set; }
     public StatusPagamento Status { get; init; }
 
-    public bool EstaAutorizado() => Status == StatusPagamento.Autorizado;
+    public bool EstaAutorizado()
+    {
+        return Status == StatusPagamento.Autorizado;
+    }
 
     public void AssociarIdExterno(string idExterno)
     {

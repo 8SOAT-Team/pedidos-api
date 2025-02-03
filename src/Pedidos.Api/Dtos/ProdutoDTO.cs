@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Postech8SOAT.FastOrder.WebAPI.DTOs;
 
 public class ProdutoDTO
 {
-    [DisplayName("Id")]
-    public Guid? Id { get; private set; }
+    [DisplayName("Id")] public Guid? Id { get; private set; }
 
     [Required(ErrorMessage = "O nome é requerido.")]
     [MinLength(3)]
@@ -26,18 +25,16 @@ public class ProdutoDTO
     [DisplayFormat(DataFormatString = "{0:C2}")]
     [DataType(DataType.Currency)]
     [DisplayName("Preço")]
-    public decimal Preco { get;  set; }
+    public decimal Preco { get; set; }
 
-    [Required]
-    [DisplayName("Categoria")]
-    public Guid CategoriaId { get; set; }
+    [Required] [DisplayName("Categoria")] public Guid CategoriaId { get; set; }
 
     [MaxLength(300)]
     [DisplayName("Imagem do produto.")]
-    public string? Imagem { get;  set; }
+    public string? Imagem { get; set; }
 
     public void SetId(Guid id)
     {
         Id = id;
-    }    
+    }
 }

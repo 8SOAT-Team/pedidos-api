@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Asp.Versioning.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Produtos;
 using Pedidos.Adapters.Types.Results;

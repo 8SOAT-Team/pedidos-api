@@ -12,8 +12,7 @@ public class CategoriaDto
         Descricao = descricao;
     }
 
-    [DisplayName("Id")]
-    public Guid? Id { get; private init; }
+    [DisplayName("Id")] public Guid? Id { get; private init; }
 
     [Required(ErrorMessage = "O nome é requerido.")]
     [MinLength(3)]

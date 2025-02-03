@@ -17,17 +17,9 @@ public class Pedido : Entity, IAggregateRoot
     private static readonly ImmutableHashSet<StatusPedido> StatusPedidoPermiteAlteracao =
         [StatusPedido.Recebido, StatusPedido.EmPreparacao];
 
-    public DateTime DataPedido { get; private set; }
-    public StatusPedido StatusPedido { get; private set; }
-    public Guid? ClienteId { get; private set; }
-    public virtual Cliente? Cliente { get; set; }
-    public virtual ICollection<ItemDoPedido> ItensDoPedido { get; set; }
-    public decimal ValorTotal { get; private set; }
-
-    public Guid? PagamentoId { get; private set; }
-    public StatusPagamento StatusPagamento { get; private set; }
-
-    protected Pedido() { }
+    protected Pedido()
+    {
+    }
 
     [JsonConstructor]
     public Pedido(Guid id, Guid? clienteId, List<ItemDoPedido> itensDoPedido)
@@ -41,6 +33,16 @@ public class Pedido : Entity, IAggregateRoot
         StatusPedido = StatusInicial;
         CalcularValorTotal();
     }
+
+    public DateTime DataPedido { get; private set; }
+    public StatusPedido StatusPedido { get; private set; }
+    public Guid? ClienteId { get; private set; }
+    public virtual Cliente? Cliente { get; set; }
+    public virtual ICollection<ItemDoPedido> ItensDoPedido { get; set; }
+    public decimal ValorTotal { get; private set; }
+
+    public Guid? PagamentoId { get; private set; }
+    public StatusPagamento StatusPagamento { get; private set; }
 
     public void CalcularValorTotal()
     {
@@ -65,7 +67,7 @@ public class Pedido : Entity, IAggregateRoot
             $"Status do pedido não permite iniciar preparo. O status deve ser {StatusPedido.Recebido} para iniciar o preparo.");
 
         StatusPedido = StatusPedido.EmPreparacao;
-        RaiseEvent(new PedidoEmPreparacao(PedidoId: Id));
+        RaiseEvent(new PedidoEmPreparacao(Id));
         return this;
     }
 
@@ -75,7 +77,7 @@ public class Pedido : Entity, IAggregateRoot
             $"Status do pedido não permite finalizar o preparo. O status deve ser {StatusPedido.EmPreparacao} para finalizar o preparo.");
 
         StatusPedido = StatusPedido.Pronto;
-        RaiseEvent(new PedidoPronto(PedidoId: Id));
+        RaiseEvent(new PedidoPronto(Id));
         return this;
     }
 
@@ -85,8 +87,8 @@ public class Pedido : Entity, IAggregateRoot
             $"O pedido deve estar {StatusPedido.Pronto} para realizar a entrega.");
 
         StatusPedido = StatusFinal;
-        
-        RaiseEvent(new PedidoFinalizado(PedidoId: Id));
+
+        RaiseEvent(new PedidoFinalizado(Id));
         return this;
     }
 
@@ -97,7 +99,7 @@ public class Pedido : Entity, IAggregateRoot
 
         StatusPedido = StatusPedido.Cancelado;
 
-        RaiseEvent(new PedidoCancelado(PedidoId: Id));
+        RaiseEvent(new PedidoCancelado(Id));
         return this;
     }
 
@@ -106,6 +108,6 @@ public class Pedido : Entity, IAggregateRoot
         DomainExceptionValidation.When(StatusPedido != StatusInicial,
             $"Status do pedido não permite pagamento. O status deve ser {StatusPedido.Recebido} para realizar o pagamento.");
 
-        RaiseEvent(new PedidoRealizado(PedidoId: Id, ValorTotal: ValorTotal, MetodoDePagamento: metodoDePagamento));
+        RaiseEvent(new PedidoRealizado(Id, ValorTotal, metodoDePagamento));
     }
 }

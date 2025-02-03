@@ -9,8 +9,8 @@ namespace Pedidos.Infrastructure.Clientes.Gateways;
 
 public class ClienteGateway : IClienteGateway
 {
-    private readonly FastOrderContext _context;
     private readonly DbSet<Cliente> _clientes;
+    private readonly FastOrderContext _context;
 
     public ClienteGateway(FastOrderContext context)
     {

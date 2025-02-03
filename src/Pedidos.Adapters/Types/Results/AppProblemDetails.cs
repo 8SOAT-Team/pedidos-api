@@ -7,6 +7,7 @@ public record AppProblemDetails(string Type, string Title, string Status, string
     {
     }
 }
+
 public record AppBadRequestProblemDetails(string Type, string Detail, string Instance)
     : AppProblemDetails(Type, "Request invalido", StatusConst.BadRequest, Detail, Instance)
 {

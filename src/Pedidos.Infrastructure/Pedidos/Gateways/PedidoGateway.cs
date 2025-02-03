@@ -4,19 +4,21 @@ using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
+
 public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)
     {
         return dbContext.Pedidos.Include(p => p.ItensDoPedido)
-             .ThenInclude(i => i.Produto)
-             .Include(i => i.Cliente)
-             .SingleOrDefaultAsync(i => i.Id == id);
+            .ThenInclude(i => i.Produto)
+            .Include(i => i.Cliente)
+            .SingleOrDefaultAsync(i => i.Id == id);
     }
 
     public Task<List<Pedido>> GetAllPedidosPending()
     {
-        const string query = "SELECT * FROM Pedidos WHERE StatusPedido IN (3, 2, 1) ORDER BY StatusPedido DESC, DataPedido ASC";
+        const string query =
+            "SELECT * FROM Pedidos WHERE StatusPedido IN (3, 2, 1) ORDER BY StatusPedido DESC, DataPedido ASC";
         return dbContext.Pedidos.FromSqlRaw(query).ToListAsync();
     }
 

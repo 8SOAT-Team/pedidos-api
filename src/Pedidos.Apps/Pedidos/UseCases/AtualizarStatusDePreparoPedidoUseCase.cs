@@ -1,5 +1,4 @@
 ﻿using CleanArch.UseCase.Faults;
-using Microsoft.Extensions.Logging;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
 using Pedidos.Apps.UseCases;
@@ -8,21 +7,23 @@ using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Apps.Pedidos.UseCases;
 
-public class 
-    AtualizarStatusDePreparoPedidoUseCase(ILogger<AtualizarStatusDePreparoPedidoUseCase> logger,
-    IPedidoGateway pedidoGateway) : UseCase<AtualizarStatusDePreparoPedidoUseCase, NovoStatusDePedidoDto, Pedido>(logger)
+public class
+    AtualizarStatusDePreparoPedidoUseCase(
+        ILogger<AtualizarStatusDePreparoPedidoUseCase> logger,
+        IPedidoGateway pedidoGateway)
+    : UseCase<AtualizarStatusDePreparoPedidoUseCase, NovoStatusDePedidoDto, Pedido>(logger)
 {
     private static readonly Dictionary<StatusPedido, Func<Pedido, Pedido>> ActionUpdateStatus = new()
     {
         { StatusPedido.EmPreparacao, p => p.IniciarPreparo() },
         { StatusPedido.Pronto, p => p.FinalizarPreparo() },
         { StatusPedido.Finalizado, p => p.Entregar() },
-        { StatusPedido.Cancelado, p => p.Cancelar() },
+        { StatusPedido.Cancelado, p => p.Cancelar() }
     };
 
     private readonly IPedidoGateway _pedidoGateway = pedidoGateway;
 
-    protected async override Task<Pedido?> Execute(NovoStatusDePedidoDto request)
+    protected override async Task<Pedido?> Execute(NovoStatusDePedidoDto request)
     {
         var pedido = await _pedidoGateway.GetByIdAsync(request.PedidoId);
 

@@ -25,8 +25,8 @@ public static class PedidosEndpoint
                 IResult result = null!;
 
                 pedidoCriado.Match(
-                    onSuccess: (p) => result = Results.Created($"/pedido/{p.Id}", p),
-                    onFailure: (errors) => result = pedidoCriado.GetFailureResult());
+                    p => result = Results.Created($"/pedido/{p.Id}", p),
+                    errors => result = pedidoCriado.GetFailureResult());
 
                 return result;
             }).WithTags(pedidoTag)
@@ -34,7 +34,8 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Crie um pedido informando os itens.")
-            .WithOpenApi();;
+            .WithOpenApi();
+        ;
 
         group.MapGet("/pedido/{id:guid}",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
@@ -47,7 +48,8 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Obtenha um pedido")
-            .WithOpenApi();;
+            .WithOpenApi();
+        ;
 
         group.MapGet("/pedido",
                 async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
@@ -60,7 +62,8 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Liste pedidos")
-            .WithOpenApi();;
+            .WithOpenApi();
+        ;
 
         group.MapGet("/pedido/status", async ([FromHeader(Name = Constants.IdempotencyHeaderKey)] Guid? idempotencyKey,
                 [FromServices] IPedidoController pedidoController) =>
@@ -72,7 +75,8 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Lista de pedidos Pendentes (Pronto > Em Preparação > Recebido)")
-            .WithOpenApi();;
+            .WithOpenApi();
+        ;
 
         group.MapPut("/pedido/{id:guid}/status", async (
                 [FromHeader(Name = Constants.IdempotencyHeaderKey)]

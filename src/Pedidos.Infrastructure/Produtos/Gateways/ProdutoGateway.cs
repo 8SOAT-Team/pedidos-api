@@ -36,7 +36,7 @@ public class ProdutoGateway : IProdutoGateway
     public Task<Produto?> GetProdutoCompletoByIdAsync(Guid id)
     {
         return _dbContext.Set<Produto>()
-             .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<ICollection<Produto>> GetProdutosByCategoriaAsync(ProdutoCategoria categoria)
