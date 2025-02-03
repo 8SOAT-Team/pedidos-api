@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Pedidos.Apps\Pedidos.Apps.csproj"/>
+        <ProjectReference Include="..\Pedidos.CrossCutting\Pedidos.CrossCutting.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Scrutor" Version="6.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Gateways\Clientes\"/>
+        <Folder Include="Gateways\Pedidos\"/>
+        <Folder Include="Gateways\Produtos\"/>
+    </ItemGroup>
+
+</Project>
