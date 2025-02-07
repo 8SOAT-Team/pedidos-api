@@ -4,6 +4,7 @@ using Pedidos.Adapters.Types.Results;
 
 namespace Pedidos.Infrastructure.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class JsonSerializerExtension
 {
     public static Result<T> TryDeserialize<T>([StringSyntax(StringSyntaxAttribute.Json)] this string jsonDocument,

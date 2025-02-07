@@ -55,3 +55,5 @@ app.ConfigureUseSwagger("FastOrder Pedidos API")
 if (EnvConfig.RunMigrationsOnStart) await app.ExecuteMigrationAsync();
 
 app.Run();
+
+public partial class Program { }

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Postech8SOAT.FastOrder.WebAPI.DTOs;
+namespace Pedidos.Api.Dtos;
 
-public class ProdutoDTO
+public class ProdutoDto
 {
     [DisplayName("Id")] public Guid? Id { get; private set; }
 

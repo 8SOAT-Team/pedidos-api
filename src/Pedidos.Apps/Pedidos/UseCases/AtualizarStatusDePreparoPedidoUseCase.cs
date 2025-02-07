@@ -15,17 +15,14 @@ public class
 {
     private static readonly Dictionary<StatusPedido, Func<Pedido, Pedido>> ActionUpdateStatus = new()
     {
-        { StatusPedido.EmPreparacao, p => p.IniciarPreparo() },
         { StatusPedido.Pronto, p => p.FinalizarPreparo() },
         { StatusPedido.Finalizado, p => p.Entregar() },
         { StatusPedido.Cancelado, p => p.Cancelar() }
     };
 
-    private readonly IPedidoGateway _pedidoGateway = pedidoGateway;
-
     protected override async Task<Pedido?> Execute(NovoStatusDePedidoDto request)
     {
-        var pedido = await _pedidoGateway.GetByIdAsync(request.PedidoId);
+        var pedido = await pedidoGateway.GetByIdAsync(request.PedidoId);
 
         if (pedido is null)
         {
@@ -40,6 +37,6 @@ public class
         }
 
         _ = action(pedido);
-        return await _pedidoGateway.UpdateAsync(pedido);
+        return await pedidoGateway.UpdateAsync(pedido);
     }
 }
