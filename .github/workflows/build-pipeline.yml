@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fastorder:latest \
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/pedidos-api:latest \
             -t ${{ secrets.DOCKER_USERNAME }}/fastorder:${{ github.sha }} \
             .
       - name: Push Docker images to Docker Hub
