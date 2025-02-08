@@ -41,4 +41,4 @@ jobs:
         run: |
           kubectl apply -f iac/kubernetes/namespace.yaml
           kubectl apply -f iac/kubernetes
-          kubectl rollout status deployment/fast-dep
+          kubectl rollout status deployment/pedidos-dep -n fast-order
