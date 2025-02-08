@@ -39,5 +39,6 @@ jobs:
 
       - name: Deploy to EKS Cluster
         run: |
+          kubectl apply -f iac/kubernetes/namespace.yaml
           kubectl apply -f iac/kubernetes
           kubectl rollout status deployment/fast-dep
