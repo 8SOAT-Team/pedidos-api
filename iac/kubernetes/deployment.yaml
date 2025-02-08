@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: pedidos-api-cont
-        image: bergzado/pedidos-api:0.0.8
+        image: sickbanger/pedidos-api:latest
         ports:
         - containerPort: 8080
         - containerPort: 8081
