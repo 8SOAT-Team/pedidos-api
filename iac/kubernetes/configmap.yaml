@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pedidos-api-configmap
+  namespace: fast-order
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  CONNECTIONSTRINGS_DEFAULTCONNECTIONCONTAINER: "Server=rds-pedidosdb-tf.c3qig4kemrm8.us-east-1.rds.amazonaws.com,1433;Database=PedidosDB;User Id=sa;Password=pedidos#2024;Encrypt=false;TrustServerCertificate=true;MultipleActiveResultSets=true;"
+  DISTRIBUTED_CACHE_URL: "soat-cache.uwgp5c.ng.0001.use1.cache.amazonaws.com:6379"
+  RUN_MIGRATIONS_ON_START: "true"
