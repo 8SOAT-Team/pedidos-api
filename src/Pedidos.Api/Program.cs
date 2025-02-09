@@ -43,7 +43,6 @@ var group = app
     .MapGroup("v{version:apiVersion}")
     .WithApiVersionSet(apiVersionSet);
 
-
 app.AddEndPointProdutos(group);
 app.AddEndpointPedidos(group);
 app.AddEndpointClientes(group);

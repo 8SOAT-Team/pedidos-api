@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using Pedidos.Domain.Pedidos.Entities;
-using Postech8SOAT.FastOrder.Tests.Integration.Builder;
 
 namespace Pedidos.Tests.IntegrationTests.Builder; 
 internal class ItemDoPedidoBuilder : Faker<ItemDoPedido>

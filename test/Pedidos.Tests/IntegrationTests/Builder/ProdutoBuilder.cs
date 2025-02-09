@@ -1,7 +1,6 @@
 ﻿using Bogus;
 using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
-using Postech8SOAT.FastOrder.Tests.Integration.Builder;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
 

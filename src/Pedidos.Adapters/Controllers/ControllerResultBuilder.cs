@@ -19,7 +19,8 @@ public class ControllerResultBuilder<TResultValue, TEntity>
     private ControllerResultBuilder(IUseCase useCase)
     {
         _isFailure = useCase.IsFailure;
-        _useCaseError = useCase.GetErrors().FirstOrDefault();
+        _useCaseError = useCase.GetErrors().FirstOrDefault(e => e.Code == BadRequest) ??
+                        useCase.GetErrors().FirstOrDefault();
     }
 
     public static ControllerResultBuilder<TResultValue, TEntity> ForUseCase(IUseCase useCase)

@@ -37,8 +37,4 @@
         <ProjectReference Include="..\..\src\Pedidos.Domain\Pedidos.Domain.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="BDD\"/>
-    </ItemGroup>
-
 </Project>

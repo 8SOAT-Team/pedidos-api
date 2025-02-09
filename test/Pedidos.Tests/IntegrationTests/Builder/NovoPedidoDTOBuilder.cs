@@ -2,35 +2,38 @@
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
-internal class NovoPedidoDtoBuilder : Faker<NovoPedidoDto>
+
+internal sealed class NovoPedidoDtoBuilder : Faker<NovoPedidoDto>
 {
     public NovoPedidoDtoBuilder()
     {
-        CustomInstantiator(f => new NovoPedidoDto()
-        {
-            ClienteId = f.Random.Guid(),
-            ItensDoPedido = new List<NovoItemDePedido>()
-            {
-                new NovoItemDePedidoBuilder().Build(),
-                new NovoItemDePedidoBuilder().Build()
-            }
-        });
+        RuleFor(p => p.ClienteId, f => f.Random.Guid());
+        RuleFor(p => p.ItensDoPedido, f => f.Make(3, () => NovoItemDePedidoBuilder.CreateBuilder().Generate()));
     }
 
-    public NovoPedidoDtoBuilder(Guid clienteId)
+    public NovoPedidoDtoBuilder WithClientId(Guid? clienteId)
     {
-        CustomInstantiator(f => new NovoPedidoDto()
-        {
-            ClienteId = clienteId,
-            ItensDoPedido = new List<NovoItemDePedido>()
-            {
-                new NovoItemDePedidoBuilder().Build(),
-                new NovoItemDePedidoBuilder().Build()
-            }
-        });
+        RuleFor(p => p.ClienteId, clienteId);
+        return this;
     }
 
-    public NovoPedidoDto Build() => Generate();
+    public NovoPedidoDtoBuilder WithItensDoPedido(
+        Func<Faker, NovoItemDePedidoBuilder, List<NovoItemDePedido>> itensDoPedido)
+    {
+        RuleFor(p => p.ItensDoPedido, f => itensDoPedido(f, NovoItemDePedidoBuilder.CreateBuilder()));
+        return this;
+    }
+
+    public static NovoPedidoDtoBuilder CreateBuilder() => new();
+
+    public static NovoPedidoDto CreateValid(Func<Faker, NovoItemDePedidoBuilder, List<NovoItemDePedido>> itensDoPedido,
+        Guid? clienteId = null)
+        => CreateBuilder()
+            .WithClientId(clienteId)
+            .WithItensDoPedido(itensDoPedido)
+            .Generate();
+
+    public static NovoPedidoDto CreateInvalid() => CreateBuilder()
+        .WithClientId(Guid.Empty)
+        .Generate();
 }
-
-

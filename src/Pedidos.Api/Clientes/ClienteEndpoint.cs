@@ -23,9 +23,7 @@ public static class ClienteEndpoint
             {
                 var useCaseResult = await controller.IdentificarClienteAsync(cpf);
                 return useCaseResult.GetResult();
-            }).WithTags(endpointTag).WithSummary("Identifique um cliente pelo seu CPF" +
-                                                 "" +
-                                                 "")
+            }).WithTags(endpointTag).WithSummary("Identifique um cliente pelo seu CPF")
             .Produces<ClienteIdentificadoDto>()
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)

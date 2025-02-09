@@ -1,18 +1,20 @@
 ﻿using Bogus;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
-using Postech8SOAT.FastOrder.Tests.Integration.Builder;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
-internal class NovoItemDePedidoBuilder : Faker<NovoItemDePedido>
+internal sealed class NovoItemDePedidoBuilder : Faker<NovoItemDePedido>
 {
     public NovoItemDePedidoBuilder()
     {
-        CustomInstantiator(f => new NovoItemDePedido()
-        {
-            ProdutoId = RetornaIdProdutoUtil.RetornaIdProduto(),
-            Quantidade = f.Random.Int(1, 10)
-        });
+        RuleFor(p => p.ProdutoId, f => f.Random.Guid());
+        RuleFor(p => p.Quantidade, f => f.Random.Int(1, 10));
     }
-
-    public NovoItemDePedido Build() => Generate();
+    
+    public NovoItemDePedidoBuilder WithProdutoId(Guid produtoId)
+    {
+        RuleFor(p => p.ProdutoId, produtoId);
+        return this;
+    }
+    
+    public static NovoItemDePedidoBuilder CreateBuilder() => new();
 }
