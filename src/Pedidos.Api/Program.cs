@@ -43,7 +43,6 @@ var group = app
     .MapGroup("v{version:apiVersion}")
     .WithApiVersionSet(apiVersionSet);
 
-
 app.AddEndPointProdutos(group);
 app.AddEndpointPedidos(group);
 app.AddEndpointClientes(group);
@@ -55,3 +54,5 @@ app.ConfigureUseSwagger("FastOrder Pedidos API")
 if (EnvConfig.RunMigrationsOnStart) await app.ExecuteMigrationAsync();
 
 app.Run();
+
+public partial class Program { }

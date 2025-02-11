@@ -1,10 +1,12 @@
-﻿using CleanArch.UseCase;
+﻿using System.Diagnostics.CodeAnalysis;
+using CleanArch.UseCase;
 using CleanArch.UseCase.Faults;
 using CleanArch.UseCase.Options;
 using Pedidos.Domain.Exceptions;
 
 namespace Pedidos.Apps.UseCases;
 
+[ExcludeFromCodeCoverage]
 public static class UseCaseExtension
 {
     public static Task<Any<TOut>> ResolveAsync<TLogContext, TCommand, TOut>(
@@ -17,6 +19,7 @@ public static class UseCaseExtension
     }
 }
 
+[ExcludeFromCodeCoverage]
 public abstract class UseCase<TLogContext, TCommand, TOut>(ILogger<TLogContext> logger)
     : UseCaseBase<TLogContext, TCommand, TOut>(logger) where TOut : class
 {

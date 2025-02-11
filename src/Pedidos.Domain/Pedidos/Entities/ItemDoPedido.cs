@@ -7,7 +7,7 @@ namespace Pedidos.Domain.Pedidos.Entities;
 
 public class ItemDoPedido : Entity
 {
-    private ItemDoPedido()
+    protected ItemDoPedido()
     {
     }
 

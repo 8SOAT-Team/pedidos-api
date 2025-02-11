@@ -20,6 +20,9 @@ public abstract class Entity : IEntity
 
     public IEnumerable<DomainEvent?> ReleaseEvents()
     {
-        yield return _domainEvents.TryDequeue(out var domainEvent) ? domainEvent : null;
+        while (_domainEvents.TryDequeue(out var domainEvent))
+        {
+            yield return domainEvent;
+        }
     }
 }

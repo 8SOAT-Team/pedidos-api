@@ -1,5 +1,8 @@
-﻿namespace Pedidos.CrossCutting;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.CrossCutting;
+
+[ExcludeFromCodeCoverage]
 public static class EnvConfig
 {
     public static string EnvironmentName => EnvConfigValueGetter.MustGetString("ASPNETCORE_ENVIRONMENT");
