@@ -15,10 +15,4 @@
         <PackageReference Include="Scrutor" Version="6.0.1"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Gateways\Clientes\"/>
-        <Folder Include="Gateways\Pedidos\"/>
-        <Folder Include="Gateways\Produtos\"/>
-    </ItemGroup>
-
 </Project>
