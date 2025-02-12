@@ -152,7 +152,7 @@ kubectl get pods -n fast-order
 
 - Aplica os manifests Kubernetes armazenados na pasta `iac/kubernetes/`.
 
-- Aguarda a conclusão do rollout do `deployment pedidos-dep` no `namespace fast-order`.
+- Aguarda a conclusão do rollout do `deployment pedidos-dep` no `namespace fast-order`.    
 
 
 ## Estrutura dos diretórios
