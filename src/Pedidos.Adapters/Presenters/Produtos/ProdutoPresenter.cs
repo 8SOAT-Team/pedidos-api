@@ -4,7 +4,7 @@ using Pedidos.Domain.Produtos.Entities;
 
 namespace Pedidos.Adapters.Presenters.Produtos;
 
-internal static class ProdutoPresenter
+public static class ProdutoPresenter
 {
     public static ProdutoCriadoDto AdaptProdutoCriado(Produto produto)
     {
