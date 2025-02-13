@@ -11,7 +11,7 @@ using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Adapters.Controllers.Clientes;
 
-internal class ClienteController : IClienteController
+public class ClienteController : IClienteController
 {
     private readonly IClienteGateway _clienteGateway;
     private readonly ILoggerFactory _loggerFactory;
