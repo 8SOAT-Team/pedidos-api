@@ -27,6 +27,8 @@ public static class GatewayService
 
         services.AddSingleton<IRequestGateway, RequestGateway>();
 
+        services.AddScoped<IPagamentoGateway, PagamentoGateway>();
+
         services.AddRefitClient<IPagamentoWebApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(EnvConfig.PagamentoWebApiUrl));
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Pedidos.Adapters.Gateways.Caches;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 using Pedidos.Infrastructure.Extensions;
 using StackExchange.Redis;
 

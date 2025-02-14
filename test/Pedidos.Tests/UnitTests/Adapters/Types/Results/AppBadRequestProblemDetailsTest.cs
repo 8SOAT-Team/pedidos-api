@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Tests.UnitTests.Adapters.Types.Results;
 

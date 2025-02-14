@@ -20,6 +20,12 @@ internal sealed class PagamentoStubBuilder : Faker<Pagamento>
         RuleFor(x => x.Status, status);
         return this;
     }
+    
+    public PagamentoStubBuilder WithId(Guid id)
+    {
+        RuleFor(x => x.Id, id);
+        return this;
+    }
 
     public static PagamentoStubBuilder NewBuilder() => new();
     public static Pagamento Create() => new PagamentoStubBuilder().Generate();

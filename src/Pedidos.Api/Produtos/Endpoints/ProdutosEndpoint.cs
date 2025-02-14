@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Produtos;
-using Pedidos.Adapters.Types.Results;
 using Pedidos.Api.Endpoints;
 using Pedidos.Api.Endpoints.Extensions;
 using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Apps.Produtos.UseCases.DTOs;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Api.Produtos.Endpoints;
 

@@ -10,7 +10,7 @@ public static class HttpContentExtension
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
     {
         MaxDepth = 16,
-        ReferenceHandler = ReferenceHandler.Preserve,
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
         Converters = { new JsonStringEnumConverter() }
     };
     

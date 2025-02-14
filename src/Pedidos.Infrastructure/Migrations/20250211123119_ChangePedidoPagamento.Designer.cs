@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pedidos.Infrastructure.Databases;
 
@@ -11,9 +12,11 @@ using Pedidos.Infrastructure.Databases;
 namespace Pedidos.Infrastructure.Migrations
 {
     [DbContext(typeof(FastOrderContext))]
-    partial class FastOrderContextModelSnapshot : ModelSnapshot
+    [Migration("20250211123119_ChangePedidoPagamento")]
+    partial class ChangePedidoPagamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

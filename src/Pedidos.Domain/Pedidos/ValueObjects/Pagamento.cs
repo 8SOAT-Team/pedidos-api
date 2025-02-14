@@ -4,11 +4,11 @@ namespace Pedidos.Domain.Pedidos.ValueObjects;
 
 public class Pagamento
 {
-    public Guid Id { get; init; }
+    public Guid? Id { get; init; }
     public string? IdExterno { get; private set; }
-    public StatusPagamento Status { get; init; }
+    public StatusPagamento? Status { get; init; }
 
-    public string UrlPagamento { get; init; }
+    public string? UrlPagamento { get; init; }
     public bool EstaAutorizado()
     {
         return Status == StatusPagamento.Autorizado;

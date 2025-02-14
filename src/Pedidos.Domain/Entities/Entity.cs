@@ -25,4 +25,6 @@ public abstract class Entity : IEntity
             yield return domainEvent;
         }
     }
+    
+    public int CountEvents() => _domainEvents.Count;
 }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Pedidos.Adapters.Types.Results;
+namespace Pedidos.Apps.Types.Results;
 
 [ExcludeFromCodeCoverage]
 public record AppProblemDetails(string Type, string Title, string Status, string Detail, string Instance)

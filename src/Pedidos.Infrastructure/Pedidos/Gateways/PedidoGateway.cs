@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pedidos.Adapters.Gateways.Pagamentos;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
-public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
+public class PedidoGateway(FastOrderContext dbContext, IPagamentoGateway pagamentoGateway) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)
     {
@@ -51,5 +52,18 @@ public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
         dbContext.Set<Pedido>().Update(pedido);
         await dbContext.SaveChangesAsync();
         return pedido;
+    }
+
+    public async Task<Pedido> IniciarPagamentoAsync(NovoPagamentoDto dto)
+    {
+        var pedido = await GetByIdAsync(dto.PedidoId);
+        if (pedido is null)
+        {
+            throw new ApplicationException("Pedido não encontrado");
+        }
+         
+        var pagamentoResult = await pagamentoGateway.IniciarPagamentoAsync(dto, pedido);
+        
+        return pagamentoResult.IsSucceed ? pagamentoResult.Value! : pedido;
     }
 }

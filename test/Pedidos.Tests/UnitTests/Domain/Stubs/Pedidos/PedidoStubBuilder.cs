@@ -22,8 +22,8 @@ internal sealed class PedidoStubBuilder : Faker<Pedido>
 
     public PedidoStubBuilder WithPagamento(StatusPagamento status, Guid? pagamentoId = null)
     {
-        RuleFor(x => x.PagamentoId, pagamentoId ?? Guid.NewGuid());
-        RuleFor(x => x.StatusPagamento, status);
+        RuleFor(x => x.Pagamento, PagamentoStubBuilder.NewBuilder()
+            .WithId(pagamentoId ?? Guid.NewGuid()).WithStatus(status).Generate());
         return this;
     }
 

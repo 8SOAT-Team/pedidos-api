@@ -2,7 +2,7 @@
 using CleanArch.UseCase.Faults;
 using CleanArch.UseCase.Options;
 using Pedidos.Adapters.Presenters.UseCases;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Adapters.Controllers;
 

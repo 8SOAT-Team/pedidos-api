@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Adapters.Presenters.Pedidos;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Pedidos.EventHandlers;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
+using Pedidos.Apps.Types.Results;
+using Pedidos.Domain.Entities;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Pedidos.Enums;
 using NovoPedidoDto = Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto;
@@ -21,14 +23,6 @@ public class PedidoController(
     IProdutoGateway produtoGateway,
     IPedidoHandler pedidoHandler) : IPedidoController
 {
-    private async Task PedidosHandleEvents(Pedido pedido)
-    {
-        foreach (var @event in pedido.ReleaseEvents())
-        {
-            await pedidoHandler.HandleAsync(@event!);
-        }
-    }
-    
     public async Task<Result<PedidoDto>> AtualizarStatusDePreparacaoDoPedido(StatusPedido novoStatus, Guid pedidoId)
     {
         var useCase =
@@ -48,6 +42,20 @@ public class PedidoController(
             .Build();
     }
 
+    public async Task<Result<PedidoConfirmadoDto>> ConfirmarPedido(Guid pedidoId, MetodoDePagamento metodoDePagamento)
+    {
+        var useCase = new ConfirmarPedidoUseCase(logger.CreateLogger<ConfirmarPedidoUseCase>(),
+            pedidoGateway, pedidoHandler);
+        var useCaseResult = await useCase.ResolveAsync(new ConfirmarPedidoDto(pedidoId, metodoDePagamento));
+
+        return ControllerResultBuilder<PedidoConfirmadoDto, Pedido>
+            .ForUseCase(useCase)
+            .WithInstance(pedidoId)
+            .WithResult(useCaseResult)
+            .AdaptUsing(PedidoPresenter.ToPedidoConfirmadoDto)
+            .Build();
+    }
+
     public async Task<Result<PedidoDto>> CreatePedidoAsync(NovoPedidoDto pedido)
     {
         var useCase = new CriarNovoPedidoUseCase(logger.CreateLogger<CriarNovoPedidoUseCase>(), pedidoGateway,
@@ -62,12 +70,6 @@ public class PedidoController(
             }).ToList()
         });
 
-        var pedidoCriado = useCaseResult.Value;
-        
-        pedidoCriado.IniciarPagamento(MetodoDePagamento.Cartao);
-        
-        await PedidosHandleEvents(pedidoCriado);
-        
         return ControllerResultBuilder<PedidoDto, Pedido>
             .ForUseCase(useCase)
             .WithResult(useCaseResult)

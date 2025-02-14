@@ -2,7 +2,7 @@
 using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
-internal class PedidoBuilder : Faker<Pedido>
+internal sealed class PedidoBuilder : Faker<Pedido>
 {
     public PedidoBuilder()
     {
