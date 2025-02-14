@@ -1,0 +1,23 @@
+﻿<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage">
+        <Configuration>
+          <Exclude>
+            <!-- Excluir projetos pelo nome -->
+            <ModulePath>.*Crosscutting.*</ModulePath>
+            <ModulePath>Pedidos.Infrastructure</ModulePath>
+            <ModulePath>Pedidos.Adapters</ModulePath>
+            
+            <!-- Excluir namespaces específicos -->
+            <ModulePath>*.Dtos* </ModulePath>
+
+            <!-- Excluir código gerado automaticamente -->
+            <Attribute>System.CodeDom.Compiler.GeneratedCodeAttribute</Attribute>
+            <Attribute>System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute</Attribute>
+          </Exclude>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
