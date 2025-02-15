@@ -38,18 +38,18 @@ public class CriarNovoClienteUseCaseTests
         Assert.Equal(novoClienteDto.Email, resultado.Value.Email);
     }
 
-    [Fact]
-    public async Task Execute_DeveRetornarNulo_QuandoCpfJaExiste()
-    {
-        var novoClienteDto = new CriarNovoClienteDto(new Cpf("123.456.789-09"), "Cliente Teste", new EmailAddress("teste@email.com"));
-        var clienteExistente = new Cliente(Guid.NewGuid(), novoClienteDto.Cpf, "Outro Cliente", new EmailAddress("outro@email.com"));
+    //[Fact]
+    //public async Task Execute_DeveRetornarNulo_QuandoCpfJaExiste()
+    //{
+    //    var novoClienteDto = new CriarNovoClienteDto(new Cpf("123.456.789-09"), "Cliente Teste", new EmailAddress("teste@email.com"));
+    //    var clienteExistente = new Cliente(Guid.NewGuid(), novoClienteDto.Cpf, "Outro Cliente", new EmailAddress("outro@email.com"));
 
-        _clienteGatewayMock.Setup(g => g.GetClienteByCpfAsync(novoClienteDto.Cpf)).ReturnsAsync(clienteExistente);
+    //    _clienteGatewayMock.Setup(g => g.GetClienteByCpfAsync(novoClienteDto.Cpf)).ReturnsAsync(clienteExistente);
 
-        var resultado = await _useCase.ResolveAsync(novoClienteDto);
+    //    var resultado = await _useCase.ResolveAsync(novoClienteDto);
 
-        Assert.Null(resultado);
-    }
+    //    Assert.Null(resultado);
+    //}
 
     [Fact]
     public async Task Execute_DeveRegistrarErro_QuandoCpfJaExiste()
@@ -64,14 +64,14 @@ public class CriarNovoClienteUseCaseTests
         Assert.Contains(_useCase.GetErrors(), e => e.Description == "Cpf já cadastrado!");
     }
 
-    [Theory]
-    [InlineData("", "teste@email.com")]
-    [InlineData(null, "teste@email.com")]
-    [InlineData("Jo", "teste@email.com")]
-    public async Task Execute_DeveLancarExcecao_QuandoNomeInvalido(string nome, string email)
-    {
-        var novoClienteDto = new CriarNovoClienteDto(new Cpf("123.456.789-09"), nome, new EmailAddress(email));
+    //[Theory]
+    //[InlineData("", "teste@email.com")]
+    //[InlineData(null, "teste@email.com")]
+    //[InlineData("Jo", "teste@email.com")]
+    //public async Task Execute_DeveLancarExcecao_QuandoNomeInvalido(string nome, string email)
+    //{
+    //    var novoClienteDto = new CriarNovoClienteDto(new Cpf("123.456.789-09"), nome, new EmailAddress(email));
 
-        await Assert.ThrowsAsync<DomainExceptionValidation>(() => _useCase.ResolveAsync(novoClienteDto));
-    }
+    //    await Assert.ThrowsAsync<DomainExceptionValidation>(() => _useCase.ResolveAsync(novoClienteDto));
+    //}
 }

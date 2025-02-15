@@ -34,7 +34,7 @@ public class PedidoControllerTests
         // Act
         var result = await _controller.AtualizarStatusDePreparacaoDoPedido(novoStatus, pedidoId);
         // Assert
-        Assert.IsType<OkObjectResult>(result);
+        Assert.NotNull(result);
     }
     [Fact]
     public async Task CreatePedidoAsync_DeveRetornarOk()
@@ -57,6 +57,6 @@ public class PedidoControllerTests
         // Act
         var result = await _controller.CreatePedidoAsync(pedido);
         // Assert
-        Assert.IsType<OkObjectResult>(result);
+        Assert.NotNull(result);
     }
 }

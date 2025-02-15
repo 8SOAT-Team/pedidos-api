@@ -4,6 +4,8 @@ using Moq;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Produtos.Entities;
+using Pedidos.Domain.Produtos.Enums;
 
 namespace Pedidos.Tests.UnitTests.Application.Pedidos.UseCase;
 public class ListarTodosPedidosUseCaseTests
@@ -23,10 +25,11 @@ public class ListarTodosPedidosUseCaseTests
     public async Task Execute_RetornaListaDePedidos()
     {
         // Arrange
+        var itemDoPedido = new ItemDoPedido(Guid.NewGuid(), new Produto(Guid.NewGuid(), "Produto Teste", "Descrição do Produto", 100, "https://postech.fiap.com.br", ProdutoCategoria.Bebida), 2);
         var expectedPedidos = new List<Pedido>
             {
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>()),
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>())
+                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>(){itemDoPedido}),
+                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>(){ itemDoPedido })
             };
 
         _pedidoGatewayMock.Setup(g => g.GetAllAsync()).ReturnsAsync(expectedPedidos);

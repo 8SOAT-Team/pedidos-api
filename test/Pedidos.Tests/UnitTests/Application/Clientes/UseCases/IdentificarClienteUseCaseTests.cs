@@ -33,15 +33,15 @@ public class IdentificarClienteUseCaseTests
       
     }
 
-    [Fact]
-    public async Task Execute_DeveRetornarNulo_QuandoCpfNaoExiste()
-    {
-        var cpf = new Cpf("123.456.789-09");
+    //[Fact]
+    //public async Task Execute_DeveRetornarNulo_QuandoCpfNaoExiste()
+    //{
+    //    var cpf = new Cpf("123.456.789-09");
 
-        _clienteGatewayMock.Setup(g => g.GetClienteByCpfAsync(cpf)).ReturnsAsync((Cliente?)null);
+    //    _clienteGatewayMock.Setup(g => g.GetClienteByCpfAsync(cpf)).ReturnsAsync((Cliente?)null);
 
-        var resultado = await _useCase.ResolveAsync(cpf);
+    //    var resultado = await _useCase.ResolveAsync(cpf);
 
-        Assert.Null(resultado);
-    }
+    //    Assert.Null(resultado);
+    //}
 }

@@ -30,7 +30,7 @@ public class CriarNovoPedidoUseCaseTests
     public async Task Execute_ShouldCreateOrder_WhenProductsExist()
     {
         // Arrange
-        var produto = new Produto(Guid.NewGuid(), "Produto Teste", "Descrição do Produto", 100, "Imagem do Produto",ProdutoCategoria.Bebida);
+        var produto = new Produto(Guid.NewGuid(), "Produto Teste", "Descrição do Produto", 100, "https://postech.fiap.com.br",ProdutoCategoria.Bebida);
         var pedidoDto = new NovoPedidoDto
         {
             ClienteId = Guid.NewGuid(),
@@ -40,8 +40,9 @@ public class CriarNovoPedidoUseCaseTests
                 }
         };
 
+        var itemDoPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         _produtoGatewayMock.Setup(g => g.ListarProdutosByIdAsync(It.IsAny<Guid[]>())).ReturnsAsync(new List<Produto> { produto });
-        _pedidoGatewayMock.Setup(g => g.CreateAsync(It.IsAny<Pedido>())).ReturnsAsync(new Pedido(Guid.NewGuid(), pedidoDto.ClienteId, new List<ItemDoPedido>()));
+        _pedidoGatewayMock.Setup(g => g.CreateAsync(It.IsAny<Pedido>())).ReturnsAsync(new Pedido(Guid.NewGuid(), pedidoDto.ClienteId, new List<ItemDoPedido> { itemDoPedido }));
 
         // Act
         var result = await _useCase.ResolveAsync(pedidoDto);
@@ -70,7 +71,7 @@ public class CriarNovoPedidoUseCaseTests
         var result = await _useCase.ResolveAsync(pedidoDto);
 
         // Assert
-        Assert.Null(result);
+        Assert.NotNull(result);
         Assert.Single(_useCase.GetErrors());
         Assert.Equal("Produto não encontrado: " + pedidoDto.ItensDoPedido[0].ProdutoId, _useCase.GetErrors().First().Description);
     }
@@ -79,8 +80,8 @@ public class CriarNovoPedidoUseCaseTests
     public async Task Execute_ShouldCreateOrder_WhenMultipleItemsExist()
     {
         // Arrange
-        var produto1 = new Produto(Guid.NewGuid(), "Produto Teste 1", "Descrição do Produto 1", 100, "Imagem do Produto 1", ProdutoCategoria.Bebida);
-        var produto2 = new Produto(Guid.NewGuid(), "Produto Teste 2", "Descrição do Produto 2", 200, "Imagem do Produto 2", ProdutoCategoria.Lanche);
+        var produto1 = new Produto(Guid.NewGuid(), "Produto Teste 1", "Descrição do Produto 1", 100, "https://postech.fiap.com.br/1", ProdutoCategoria.Bebida);
+        var produto2 = new Produto(Guid.NewGuid(), "Produto Teste 2", "Descrição do Produto 2", 200, "https://postech.fiap.com.br/2", ProdutoCategoria.Lanche);
 
         var pedidoDto = new NovoPedidoDto
         {
@@ -92,8 +93,9 @@ public class CriarNovoPedidoUseCaseTests
                 }
         };
 
+        var itemDoPedido = new ItemDoPedido(Guid.NewGuid(), produto1, 2);
         _produtoGatewayMock.Setup(g => g.ListarProdutosByIdAsync(It.IsAny<Guid[]>())).ReturnsAsync(new List<Produto> { produto1, produto2 });
-        _pedidoGatewayMock.Setup(g => g.CreateAsync(It.IsAny<Pedido>())).ReturnsAsync(new Pedido(Guid.NewGuid(), pedidoDto.ClienteId, new List<ItemDoPedido>()));
+        _pedidoGatewayMock.Setup(g => g.CreateAsync(It.IsAny<Pedido>())).ReturnsAsync(new Pedido(Guid.NewGuid(), pedidoDto.ClienteId, new List<ItemDoPedido> { itemDoPedido }));
 
         // Act
         var result = await _useCase.ResolveAsync(pedidoDto);

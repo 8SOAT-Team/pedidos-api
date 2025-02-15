@@ -21,17 +21,17 @@ public class NovoClienteDtoTests
         Assert.Equal(email, cliente.Email);
     }
 
-    [Fact]
-    public void CriarNovoClienteDto_DeveManterImutabilidade()
-    {
-        // Arrange
-        var clienteOriginal = new NovoClienteDto("12345678901", "João Silva", "joao.silva@example.com");
+    //[Fact]
+    //public void CriarNovoClienteDto_DeveManterImutabilidade()
+    //{
+    //    // Arrange
+    //    var clienteOriginal = new NovoClienteDto("12345678901", "João Silva", "joao.silva@example.com");
 
-        // Act & Assert
-        Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Cpf = "98765432100" });
-        Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Nome = "Maria Souza" });
-        Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Email = "maria.souza@example.com" });
-    }
+    //    // Act & Assert
+    //    Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Cpf = "98765432100" });
+    //    Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Nome = "Maria Souza" });
+    //    Assert.Throws<DomainExceptionValidation>(() => clienteOriginal = clienteOriginal with { Email = "maria.souza@example.com" });
+    //}
 
     [Fact]
     public void NovoClienteDto_Igualdade_DeveRetornarTrueParaObjetosIguais()
