@@ -9,7 +9,7 @@ Este repositório contém a API de pedidos, desenvolvida utilizando .NET 8. O pr
 
 Para rodar o sistema localmente, você precisará de:
 
-- Uma IDE compatível, como IntelliJ IDEA, Eclipse, ou VS Code, para baixar e abrir o repositório.
+- Uma IDE compatível, como Visual Studio, Rider ou VS Code, para baixar e abrir o repositório.
 - [Docker](https://docs.docker.com/engine/install/), [Kubernetes](https://kubernetes.io/docs/setup/), e AWS-CLI instalados para a execução da infraestrutura.
 
 ## Como Executar o Projeto Localmente
@@ -50,7 +50,7 @@ docker build -t pedidos-api .
 - Execute o container:
 
 ```sh
-docker run -p 5000:5000 pedidos-api
+docker run -p 5118:5118 pedidos-api
 ```
 
 
@@ -82,6 +82,13 @@ kubectl apply -f iac/kubernetes/
 
 ```sh
 kubectl get pods -n fast-order
+```
+
+- Testar API:
+
+```sh
+kubectl get services -n fast-order
+curl -X GET http://<EXTERNAL-IP>/health
 ```
 
 
