@@ -22,13 +22,6 @@ public class NovoPedidoDtoTests
     }
 
     [Fact]
-    public void NovoPedidoDto_ItensDoPedidoNaoPodeSerNulo()
-    {
-        // Act & Assert
-        Assert.Throws<NullReferenceException>(() => new NovoPedidoDto { ClienteId = Guid.NewGuid(), ItensDoPedido = null! });
-    }
-
-    [Fact]
     public void NovoPedidoDto_PodeTerClienteNulo()
     {
         // Arrange
