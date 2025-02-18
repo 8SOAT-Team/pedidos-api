@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using Pedidos.Adapters.Controllers.Clientes.Dtos;
+using Pedidos.Domain.Clientes.Entities;
 using Pedidos.Tests.IntegrationTests.Builder;
 using Pedidos.Tests.IntegrationTests.HostTest;
 
@@ -10,31 +11,49 @@ namespace Pedidos.Tests.IntegrationTests;
 public class ClienteEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
 {
     private readonly FastOrderWebApplicationFactory _factory;
+    private readonly Cliente _cliente;
+
 
     public ClienteEndpointsTest(FastOrderWebApplicationFactory factory)
     {
         _factory = factory;
+        _cliente = CriarCliente().Result;
+    }
+
+    private async Task<Cliente> CriarCliente()
+    {
+        try
+        {
+            var clienteExistente = _factory.Context!.Clientes.FirstOrDefault();
+            if (clienteExistente is null)
+            {
+                clienteExistente = new ClienteBuilder().Build();
+                _factory.Context.Clientes.Add(clienteExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+            return clienteExistente;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+
+        }
     }
 
     [Fact]
     public async Task GET_Deve_buscar_cliente_CPF()
     {
-        //Arrange
-        var clienteExistente = new ClienteBuilder().Build();
-        _factory.Context!.Add(clienteExistente);
-        await _factory.Context.SaveChangesAsync();
-
+        //Arrange           
         var httpClient = _factory.CreateClient();
 
         //Act
         var response =
-            await httpClient.GetAsync($"/v1/cliente?cpf={clienteExistente.Cpf}");
+            await httpClient.GetFromJsonAsync<ClienteIdentificadoDto>($"/v1/cliente?cpf={_cliente.Cpf}");
 
         //Assert
-        response.IsSuccessStatusCode.Should().BeTrue();
-        var result = await response.Content.ReadFromJsonAsync<ClienteIdentificadoDto>();
-        result.Should().NotBeNull();
-        result.Id.Should().Be(clienteExistente.Id);
+        Assert.NotNull(response);
+        response.Should().NotBeNull();
+        response.Id.Should().Be(_cliente.Id);
     }
 
     [Fact]

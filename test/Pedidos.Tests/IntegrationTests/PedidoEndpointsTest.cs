@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Domain.Clientes.Entities;
+using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Tests.IntegrationTests.Builder;
 using Pedidos.Tests.IntegrationTests.Extensions;
@@ -19,22 +20,76 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         _factory = factory;
     }
 
+    private async Task<Pedido> CriarPedido()
+    {
+        try
+        {
+            var cliente = _factory.Context!.Clientes.FirstOrDefault();
+
+            if (cliente is null)
+            {
+                cliente = new ClienteBuilder().Build();
+                _factory.Context.Clientes.Add(cliente);
+                _factory.Context.SaveChanges();
+            }
+
+            var pedidoExistente = _factory.Context!.Pedidos.FirstOrDefault();
+            if (pedidoExistente is null)
+            {
+                pedidoExistente = new PedidoBuilder(cliente.Id).Build();
+                _factory.Context.Add(pedidoExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+
+
+            return pedidoExistente;
+        }
+        catch (Exception ex)
+        {
+
+            throw new Exception(ex.Message);
+        }
+
+    }
+
     private async Task<Cliente> CriarCliente()
     {
-        var cliente = new ClienteBuilder().Build();
-        _factory.Context!.Clientes.Add(cliente);
-        await _factory.Context.SaveChangesAsync();
+        try
+        {
+            var clienteExistente = _factory.Context!.Clientes.FirstOrDefault();
+            if (clienteExistente is null)
+            {
+                clienteExistente = new ClienteBuilder().Build();
+                _factory.Context.Clientes.Add(clienteExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+            return clienteExistente;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
 
-        return cliente;
+        }
     }
 
     private async Task<Produto> CriarProduto()
     {
-        var produto = new ProdutoBuilder().Build();
-        _factory.Context!.Produtos.Add(produto);
-        await _factory.Context.SaveChangesAsync();
+        try
+        {
+            var produtoExistente = _factory.Context!.Produtos.FirstOrDefault();
+            if (produtoExistente is null)
+            {
+                produtoExistente = new ProdutoBuilder().Build();
+                _factory.Context.Produtos.Add(produtoExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+            return produtoExistente;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
 
-        return produto;
     }
 
     [Fact]
