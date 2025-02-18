@@ -5,7 +5,7 @@ using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Adapters.Presenters.Pedidos;
 
-internal static class PedidoPresenter
+public static class PedidoPresenter
 {
     public static PedidoDto ToPedidoDto(this Pedido pedido)
     {
