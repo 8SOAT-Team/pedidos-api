@@ -48,7 +48,7 @@ public class ClienteEndpointsTest : IClassFixture<FastOrderWebApplicationFactory
 
         //Act
         var response =
-            await httpClient.GetFromJsonAsync<ClienteIdentificadoDto>($"/v1/cliente?cpf={_cliente.Cpf}");
+            await httpClient.GetAsync($"/v1/cliente?cpf={_cliente.Cpf}");
 
         //Assert
         response.Should().NotBeNull();
