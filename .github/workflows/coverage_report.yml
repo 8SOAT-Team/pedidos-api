@@ -5,6 +5,7 @@ on:
     branches:
     - main
     - feat/badge
+    - fix/tests
 
 jobs:
   test-and-coverage-with-report:
