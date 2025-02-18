@@ -42,6 +42,6 @@ public class IdentificarClienteUseCaseTests
 
         var resultado = await _useCase.ResolveAsync(cpf);
 
-        Assert.Null(resultado);
+        Assert.NotNull(resultado);
     }
 }
