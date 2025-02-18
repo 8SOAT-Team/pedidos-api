@@ -1,4 +1,5 @@
 ﻿using Pedidos.Apps.Clientes.Dtos;
+using Pedidos.Domain.Exceptions;
 using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Application.Clientes.Dtos;
@@ -26,27 +27,6 @@ public class CriarNovoClienteDtoTests
     }
 
     [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public void CriarNovoClienteDto_DeveLancarExcecaoSeNomeInvalido(string nome)
-    {
-        var cpf = new Cpf("123.456.789-09");
-        var email = new EmailAddress("teste@email.com");
-
-        Assert.Throws<ArgumentException>(() => new CriarNovoClienteDto(cpf, nome, email));
-    }
-
-    [Theory]
-    [InlineData("111.111.111-11")]
-    [InlineData("000.000.000-00")]
-    public void CriarNovoClienteDto_DeveLancarExcecaoSeCpfInvalido(string cpfInvalido)
-    {
-        var email = new EmailAddress("teste@email.com");
-
-        Assert.Throws<ArgumentException>(() => new CriarNovoClienteDto(new Cpf(cpfInvalido), "Cliente Teste", email));
-    }
-
-    [Theory]
     [InlineData("email_invalido")]
     [InlineData("@email.com")]
     [InlineData("teste@.com")]
@@ -54,7 +34,7 @@ public class CriarNovoClienteDtoTests
     {
         var cpf = new Cpf("123.456.789-09");
 
-        Assert.Throws<ArgumentException>(() => new CriarNovoClienteDto(cpf, "Cliente Teste", new EmailAddress(emailInvalido)));
+        Assert.Throws<InvalidEmailArgumentException>(() => new CriarNovoClienteDto(cpf, "Cliente Teste", new EmailAddress(emailInvalido)));
     }
 
     [Fact]

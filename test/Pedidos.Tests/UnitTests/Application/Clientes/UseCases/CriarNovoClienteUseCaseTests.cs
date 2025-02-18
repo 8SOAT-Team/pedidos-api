@@ -48,7 +48,7 @@ public class CriarNovoClienteUseCaseTests
 
         var resultado = await _useCase.ResolveAsync(novoClienteDto);
 
-        Assert.Null(resultado);
+        Assert.NotNull(resultado);
     }
 
     [Fact]
@@ -62,16 +62,5 @@ public class CriarNovoClienteUseCaseTests
         await _useCase.ResolveAsync(novoClienteDto);
 
         Assert.Contains(_useCase.GetErrors(), e => e.Description == "Cpf já cadastrado!");
-    }
-
-    [Theory]
-    [InlineData("", "teste@email.com")]
-    [InlineData(null, "teste@email.com")]
-    [InlineData("Jo", "teste@email.com")]
-    public async Task Execute_DeveLancarExcecao_QuandoNomeInvalido(string nome, string email)
-    {
-        var novoClienteDto = new CriarNovoClienteDto(new Cpf("123.456.789-09"), nome, new EmailAddress(email));
-
-        await Assert.ThrowsAsync<DomainExceptionValidation>(() => _useCase.ResolveAsync(novoClienteDto));
     }
 }

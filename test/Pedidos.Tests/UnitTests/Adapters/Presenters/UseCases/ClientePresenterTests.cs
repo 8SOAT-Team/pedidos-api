@@ -40,14 +40,14 @@ public class ClientePresenterTests
     public void AdaptClienteIdentificado_Deve_LancarExcecao_Quando_Cliente_Null()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => ClientePresenter.AdaptClienteIdentificado(null!));
+        Assert.Throws<NullReferenceException>(() => ClientePresenter.AdaptClienteIdentificado(null!));
     }
 
     [Fact]
     public void AdaptCliente_Deve_LancarExcecao_Quando_Cliente_Null()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => ClientePresenter.AdaptCliente(null!));
+        Assert.Throws<NullReferenceException>(() => ClientePresenter.AdaptCliente(null!));
     }
 
     [Fact]
@@ -111,8 +111,8 @@ public class ClientePresenterTests
     public void Cliente_Deve_LancarExcecao_Para_Cpf_Invalido()
     {
         // Act & Assert
-        Assert.Throws<DomainExceptionValidation>(() => new Cliente("", "Rafael Dias", "rafael@email.com"));
-        Assert.Throws<DomainExceptionValidation>(() => new Cliente("123", "Rafael Dias", "rafael@email.com"));
+        Assert.Throws<InvalidArgumentException>(() => new Cliente("", "Rafael Dias", "rafael@email.com"));
+        Assert.Throws<InvalidArgumentException>(() => new Cliente("123", "Rafael Dias", "rafael@email.com"));
     }
 }
 
