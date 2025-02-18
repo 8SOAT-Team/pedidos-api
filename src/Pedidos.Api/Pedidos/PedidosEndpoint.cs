@@ -27,7 +27,7 @@ public static class PedidosEndpoint
                 pedidoCriado.Match(
                     p => result = Results.Created($"/pedido/{p.Id}", p),
                     errors => result = pedidoCriado.GetFailureResult());
-
+                
                 return result;
             }).WithTags(pedidoTag)
             .Produces<PedidoDto>((int)HttpStatusCode.Created)

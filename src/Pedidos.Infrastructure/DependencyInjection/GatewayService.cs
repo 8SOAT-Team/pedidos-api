@@ -1,11 +1,14 @@
-﻿using Pedidos.Apps.Clientes.Gateways;
+﻿using Pedidos.Adapters.Gateways.Pagamentos;
+using Pedidos.Apps.Clientes.Gateways;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.CrossCutting;
 using Pedidos.Infrastructure.Clientes.Gateways;
+using Pedidos.Infrastructure.Pagamentos.WebApis;
 using Pedidos.Infrastructure.Pedidos.Gateways;
 using Pedidos.Infrastructure.Produtos.Gateways;
 using Pedidos.Infrastructure.Requests;
+using Refit;
 
 namespace Pedidos.Infrastructure.DependencyInjection;
 
@@ -24,6 +27,10 @@ public static class GatewayService
 
         services.AddSingleton<IRequestGateway, RequestGateway>();
 
+        services.AddRefitClient<IPagamentoWebApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(EnvConfig.PagamentoWebApiUrl));
+
+        services.AddScoped<IPagamentoApi, PagamentoApi>();
         return services;
     }
 }
