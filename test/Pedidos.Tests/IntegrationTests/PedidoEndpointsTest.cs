@@ -121,34 +121,4 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         produtoCriado.Should().NotBeNull().And.NotBeEmpty();
         produtoCriado.FirstOrDefault(p => p.Id == pedidoExistente.Id).Should().NotBeNull();
     }
-
-//[Fact]
-//public async Task PUT_Deve_Atualizar_Status_Pedido()
-//{
-//    //Arrange
-//    var pedidoExistente = _factory.Context!.Pedidos.FirstOrDefault();
-//    if (pedidoExistente is null)
-//    {
-//        var cliente = _factory.Context.Clientes.FirstOrDefault();
-
-//        if (cliente is null)
-//        {
-//            cliente = new ClienteBuilder().Build();
-//            _factory.Context.Clientes.Add(cliente);
-//            _factory.Context.SaveChanges();
-//        }
-//        pedidoExistente = new PedidoBuilder(cliente.Id).Build();
-//        _factory.Context.Add(pedidoExistente);
-//        _factory.Context.SaveChanges();
-//    }
-
-//    var atualizaStatusPedidoExistenteDTO = new AtualizarStatusDoPedidoDTOBuilder().Build();
-
-//    var httpClient = _factory.CreateClient();
-//    //Act       
-//    var response = await httpClient.PutAsJsonAsync($"/pedido/{pedidoExistente.Id}/status", atualizaStatusPedidoExistenteDTO);
-//    //Assert
-//    Assert.NotNull(response);
-//    Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-//}
 }
