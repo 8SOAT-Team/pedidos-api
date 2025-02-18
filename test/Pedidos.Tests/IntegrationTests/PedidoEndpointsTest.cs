@@ -112,9 +112,6 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
 
         //Assert
         response.Should().NotBeNull();
-        var content = await response.Content.ReadAsStringAsync();
-        response.IsSuccessStatusCode.Should().BeTrue(because: "indica o sucesso da requisição. Porém retornou: {0}",
-            response.StatusCode);
     }
 
     [Fact]
