@@ -184,7 +184,7 @@ curl -X GET http://<EXTERNAL-IP>/health
 │   ├── coverage-report.yml         # Workflow de testes e cobertura
 │   ├── deploy-eks.yml              # Workflow de deploy no EKS
 
-```sh
+```
 
 
 ## Autores
