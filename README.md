@@ -185,3 +185,13 @@ curl -X GET http://<EXTERNAL-IP>/health
 │   ├── deploy-eks.yml              # Workflow de deploy no EKS
 
 ```sh
+
+
+## Autores
+### Fiap turma 8SOAT - Grupo 7
+
+- André Bessa - RM357159
+- Fernanda Beato - RM357346
+- Felipe Bergmann - RM357042
+- Darlei Randel - RM356751
+- Victor Oliver - RM357451
