@@ -1,12 +1,13 @@
-﻿using Pedidos.Adapters.Gateways.Pedido.Dtos;
-using Pedidos.Adapters.Gateways.Producao;
+﻿using Pedidos.Adapters.Gateways.Producao;
+using Pedidos.Adapters.Gateways.Producao.Dtos;
 using Pedidos.Adapters.Gateways.WebApis;
-using Pedidos.Infrastructure.Producao.WebApis.Dtos;
+
 
 namespace Pedidos.Infrastructure.Producao.WebApis;
+
 public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
 {  
-    public async Task<ApiResponse<PedidoCriadoDto>> IniciarProducaoAsync(NovoPedidoDto dto)
+    public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(NovoPedidoDto dto)
     {
         var request = new NovoPedidoRequest
         {
@@ -25,10 +26,10 @@ public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
             throw response.Error;
         }
 
-        return new ApiResponse<PedidoCriadoDto>
+        return new ApiResponse<PedidoResponse>
         {
             StatusCode = response.StatusCode,
-            Content = new PedidoCriadoDto
+            Content = new PedidoResponse
             {
                 Id = response.Content!.Id,
                 DataPedido = response.Content.DataPedido,
@@ -39,5 +40,5 @@ public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
 
     }
 
-   
+    
 }

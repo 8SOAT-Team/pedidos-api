@@ -1,4 +1,4 @@
-﻿using Pedidos.Infrastructure.Producao.WebApis.Dtos;
+﻿using Pedidos.Adapters.Gateways.Producao.Dtos;
 using Refit;
 
 namespace Pedidos.Infrastructure.Producao.WebApis;
