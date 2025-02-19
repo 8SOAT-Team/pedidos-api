@@ -1,5 +1,5 @@
 ﻿using CleanArch.UseCase.Faults;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Adapters.Presenters.UseCases;
 

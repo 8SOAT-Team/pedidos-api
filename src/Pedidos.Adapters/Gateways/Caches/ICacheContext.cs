@@ -1,4 +1,4 @@
-﻿using Pedidos.Adapters.Types.Results;
+﻿using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Adapters.Gateways.Caches;
 

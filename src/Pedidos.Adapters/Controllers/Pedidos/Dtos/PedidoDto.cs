@@ -9,9 +9,7 @@ public record PedidoDto
 
     public StatusPedido StatusPedido { get; init; }
 
-    // public virtual ClienteDTO? Cliente { get; init; }
     public virtual IReadOnlyCollection<ItemDoPedidoDto> ItensDoPedido { get; init; } = Array.Empty<ItemDoPedidoDto>();
 
     public decimal ValorTotal { get; init; }
-    // public virtual PagamentoResponseDTO? Pagamento { get; init; }
 }

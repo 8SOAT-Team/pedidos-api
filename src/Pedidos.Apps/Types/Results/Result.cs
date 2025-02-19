@@ -1,4 +1,4 @@
-﻿namespace Pedidos.Adapters.Types.Results;
+﻿namespace Pedidos.Apps.Types.Results;
 
 public class Result<TValue>
 {

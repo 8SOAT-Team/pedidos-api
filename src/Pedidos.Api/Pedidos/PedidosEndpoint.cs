@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Pedidos;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
-using Pedidos.Adapters.Types.Results;
 using Pedidos.Api.Dtos;
 using Pedidos.Api.Endpoints;
 using Pedidos.Api.Endpoints.Extensions;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Api.Pedidos;
 
@@ -27,7 +27,7 @@ public static class PedidosEndpoint
                 pedidoCriado.Match(
                     p => result = Results.Created($"/pedido/{p.Id}", p),
                     errors => result = pedidoCriado.GetFailureResult());
-
+                
                 return result;
             }).WithTags(pedidoTag)
             .Produces<PedidoDto>((int)HttpStatusCode.Created)
@@ -89,6 +89,22 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Atualize o status de um pedido")
+            .WithOpenApi();
+        
+        group.MapPatch("/pedido/{id:guid}/confirmacao", async (
+                [FromHeader(Name = Constants.IdempotencyHeaderKey)]
+                Guid? idempotencyKey,
+                [FromServices] IPedidoController pedidoController,
+                [FromRoute] Guid id,
+                [FromBody] PedidoMetodoDePagamentoDto request) =>
+            {
+                var result = await pedidoController.ConfirmarPedido(id, request.MetodoDePagamento);
+                return result.GetResult();
+            }).WithTags(pedidoTag)
+            .Produces<PedidoConfirmadoDto>((int)HttpStatusCode.Created)
+            .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
+            .Produces((int)HttpStatusCode.NotFound)
+            .WithSummary("Confirme o pedido e inicie o pagamento")
             .WithOpenApi();
     }
 }

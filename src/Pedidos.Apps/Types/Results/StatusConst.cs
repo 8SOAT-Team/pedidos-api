@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Pedidos.Adapters.Types.Results;
+namespace Pedidos.Apps.Types.Results;
 
 [ExcludeFromCodeCoverage]
 public class StatusConst

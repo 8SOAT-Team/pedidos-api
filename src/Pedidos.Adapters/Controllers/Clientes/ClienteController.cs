@@ -2,10 +2,10 @@
 using Pedidos.Adapters.Controllers.Clientes.Dtos;
 using Pedidos.Adapters.Presenters.Clientes;
 using Pedidos.Adapters.Presenters.UseCases;
-using Pedidos.Adapters.Types.Results;
 using Pedidos.Apps.Clientes.Dtos;
 using Pedidos.Apps.Clientes.Gateways;
 using Pedidos.Apps.Clientes.UseCases;
+using Pedidos.Apps.Types.Results;
 using Pedidos.Domain.Clientes.Entities;
 using Pedidos.Domain.ValueObjects;
 

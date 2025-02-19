@@ -1,6 +1,6 @@
-﻿using Pedidos.Adapters.Types.Results;
-using Pedidos.Apps.Produtos.Enums;
+﻿using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Apps.Produtos.UseCases.DTOs;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Adapters.Controllers.Produtos;
 

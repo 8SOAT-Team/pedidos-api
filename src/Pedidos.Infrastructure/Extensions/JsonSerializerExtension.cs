@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Infrastructure.Extensions;
 

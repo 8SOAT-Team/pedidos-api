@@ -3,9 +3,9 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Clientes;
 using Pedidos.Adapters.Controllers.Clientes.Dtos;
-using Pedidos.Adapters.Types.Results;
 using Pedidos.Api.Endpoints;
 using Pedidos.Api.Endpoints.Extensions;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Api.Clientes;
 

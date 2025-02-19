@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pedidos.Adapters.Presenters.Produtos;
-using Pedidos.Adapters.Types.Results;
 using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Apps.Produtos.UseCases;
 using Pedidos.Apps.Produtos.UseCases.DTOs;
+using Pedidos.Apps.Types.Results;
 using Pedidos.Apps.UseCases;
 using Pedidos.Domain.Produtos.Entities;
 

@@ -1,5 +1,5 @@
 ﻿using Pedidos.Adapters.Controllers.Clientes.Dtos;
-using Pedidos.Adapters.Types.Results;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Adapters.Controllers.Clientes;
 

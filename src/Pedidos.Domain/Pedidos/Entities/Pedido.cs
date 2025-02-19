@@ -40,9 +40,7 @@ public class Pedido : Entity, IAggregateRoot
     public virtual Cliente? Cliente { get; set; }
     public virtual ICollection<ItemDoPedido> ItensDoPedido { get; set; }
     public decimal ValorTotal { get; private set; }
-
-    public Guid? PagamentoId { get; private set; }
-    public StatusPagamento StatusPagamento { get; private set; }
+    public virtual Pagamento? Pagamento { get; set; }
 
     public void CalcularValorTotal()
     {
@@ -103,11 +101,21 @@ public class Pedido : Entity, IAggregateRoot
         return this;
     }
 
-    public void IniciarPagamento(MetodoDePagamento metodoDePagamento)
+    public void ConfirmarPedido(MetodoDePagamento metodoDePagamento)
     {
         DomainExceptionValidation.When(StatusPedido != StatusInicial,
-            $"Status do pedido não permite pagamento. O status deve ser {StatusPedido.Recebido} para realizar o pagamento.");
+            $"Status do pedido não permite confirmação. O status deve ser {StatusPedido.Recebido} para realizar a confirmação.");
 
-        RaiseEvent(new PedidoRealizado(Id, ValorTotal, metodoDePagamento));
+        RaiseEvent(new PedidoConfirmado(Id,metodoDePagamento, Cliente!, ItensDoPedido.ToList()));
+    }
+
+    public void PagamentoCriado(Guid pagamentoId, string urlPagamento)
+    {
+        Pagamento = new Pagamento
+        {
+            Id = pagamentoId,
+            Status = StatusPagamento.Pendente,
+            UrlPagamento = urlPagamento
+        };
     }
 }

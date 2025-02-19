@@ -1,5 +1,7 @@
 ﻿using Pedidos.Adapters.Controllers.Pedidos.Dtos;
+using Pedidos.Adapters.Controllers.Pedidos.Enums;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Adapters.Presenters.Pedidos;
 
@@ -29,4 +31,8 @@ public static class PedidoPresenter
     {
         return pedidos.Select(p => p.ToPedidoDto()).ToList();
     }
+
+    public static PedidoConfirmadoDto ToPedidoConfirmadoDto(this Pedido pedido) => new(pedido.Id,
+        pedido.Pagamento?.UrlPagamento!, Enum.Parse<StatusDoPagamento>(pedido.Pagamento?.Status.ToString() ??
+                                                                       StatusPagamento.Pendente.ToString()));
 }

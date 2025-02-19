@@ -20,7 +20,8 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
         [nameof(GetPedidoCompletoAsync)] =
             p => ($"{nameof(PedidoGatewayCache)}:{nameof(GetPedidoCompletoAsync)}:{p.Id}", false),
         [nameof(CreateAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false),
-        [nameof(UpdateAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false)
+        [nameof(UpdateAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false),
+        [nameof(IniciarPagamentoAsync)] = p => ($"{nameof(Pedido)}:{p.Id}", false),
     };
 
 
@@ -33,6 +34,8 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
 
         return pedidoAtualizado;
     }
+
+    public Task<Pedido> IniciarPagamentoAsync(NovoPagamentoDto dto) => nextExecution.IniciarPagamentoAsync(dto);
 
     public async Task<Pedido> CreateAsync(Pedido pedido)
     {
