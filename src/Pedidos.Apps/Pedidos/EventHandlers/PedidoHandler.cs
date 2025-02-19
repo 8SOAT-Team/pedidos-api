@@ -1,4 +1,6 @@
 ﻿using Pedidos.Apps.Pedidos.Gateways;
+using Pedidos.Apps.Producoes.Gateway;
+using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Apps.Types.Results;
 using Pedidos.Domain.Entities;
 using Pedidos.Domain.Pedidos.DomainEvents;
@@ -20,7 +22,7 @@ public record PedidoRealizadoDomainEventResponse : DomainEventResponse
     public string? UrlPagamento { get; init; }
 }
 
-public class PedidoHandler(IPedidoGateway pedidoGateway) : IPedidoHandler
+public class PedidoHandler(IPedidoGateway pedidoGateway, IProducaoGateway producaoGateway) : IPedidoHandler
 {
     public async Task<Result<Pedido>> HandleAsync(PedidoConfirmado domainEvent)
     {
@@ -47,6 +49,15 @@ public class PedidoHandler(IPedidoGateway pedidoGateway) : IPedidoHandler
         });
 
         return Result<Pedido>.Succeed(pedido);
+    }
+
+    public async Task<Result<Pedido>> HandleAsync(PedidoEmPreparacao domainEvent)
+    {
+        
+        var producao = await producaoGateway.IniciarProducaoAsync(domainEvent.PedidoId);
+
+        return Result<Pedido>.Succeed(producao);
+
     }
 
     public async Task<Result<Pedido>> HandleAsync(DomainEvent domainEvent)

@@ -8,11 +8,11 @@
 
     <ItemGroup>
         <PackageReference Include="CleanArch.UseCase" Version="1.0.19-beta-gd8a2948d46" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Pedidos.Domain\Pedidos.Domain.csproj"/>
+        <ProjectReference Include="..\Pedidos.Domain\Pedidos.Domain.csproj" />
     </ItemGroup>
 
 </Project>
