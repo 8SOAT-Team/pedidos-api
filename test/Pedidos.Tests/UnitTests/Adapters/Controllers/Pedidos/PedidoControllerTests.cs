@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using Pedidos.Adapters.Controllers.Pedidos;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
+using Pedidos.Apps.Pedidos.EventHandlers;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Domain.Pedidos.Entities;
@@ -13,13 +13,15 @@ public class PedidoControllerTests
 {
     private readonly Mock<IPedidoGateway> _pedidoGatewayMock;
     private readonly Mock<IProdutoGateway> _produtoGatewayMock;
+    private readonly Mock<IPedidoHandler> _pedidoHandler;
     private readonly PedidoController _controller;
     public PedidoControllerTests()
     {
         var loggerFactory = new LoggerFactory();
         _pedidoGatewayMock = new Mock<IPedidoGateway>();
         _produtoGatewayMock = new Mock<IProdutoGateway>();
-        _controller = new PedidoController(loggerFactory, _pedidoGatewayMock.Object, _produtoGatewayMock.Object);
+        _pedidoHandler = new Mock<IPedidoHandler>();
+        _controller = new PedidoController(loggerFactory, _pedidoGatewayMock.Object, _produtoGatewayMock.Object, _pedidoHandler.Object);
     }
     [Fact]
     public async Task AtualizarStatusDePreparacaoDoPedido_DeveRetornarOk()
