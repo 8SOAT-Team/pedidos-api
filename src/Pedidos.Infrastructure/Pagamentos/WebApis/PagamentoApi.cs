@@ -3,6 +3,8 @@ using Pedidos.Adapters.Gateways.Pagamentos.Dtos;
 using Pedidos.Adapters.Gateways.Pagamentos.Enums;
 using Pedidos.Adapters.Gateways.WebApis;
 using Pedidos.Infrastructure.Pagamentos.WebApis.Dtos;
+using NovoPagamentoItemRequest = Pedidos.Infrastructure.Pagamentos.WebApis.Dtos.NovoPagamentoItemRequest;
+using NovoPagamentoPagadorRequest = Pedidos.Infrastructure.Pagamentos.WebApis.Dtos.NovoPagamentoPagadorRequest;
 
 namespace Pedidos.Infrastructure.Pagamentos.WebApis;
 
@@ -12,9 +14,23 @@ public class PagamentoApi(IPagamentoWebApi pagamentoWebApi) : IPagamentoApi
     {
         var request = new NovoPagamentoRequest
         {
-            MetodoDePagamento = MetodosDePagamento.Cartao,
-            EmailPagador = dto.EmailPagador,
-            ValorTotal = dto.ValorTotal
+            MetodoDePagamento = MetodosDePagamento.Pix,
+            Pagador = dto.Pagador is not null
+                ? new NovoPagamentoPagadorRequest()
+                {
+                    Email = dto.Pagador.Email,
+                    Nome = dto.Pagador.Nome,
+                    Cpf = dto.Pagador.Cpf
+                }
+                : null,
+            Itens = dto.Itens.Select(x => new NovoPagamentoItemRequest
+            {
+                Id = x.Id,
+                Titulo = x.Titulo,
+                Descricao = x.Descricao,
+                Quantidade = x.Quantidade,
+                PrecoUnitario = x.PrecoUnitario,
+            }).ToList()
         };
 
         var response = await pagamentoWebApi.IniciarPagamento(dto.PedidoId, request);
@@ -23,7 +39,7 @@ public class PagamentoApi(IPagamentoWebApi pagamentoWebApi) : IPagamentoApi
         {
             throw response.Error;
         }
-        
+
         return new ApiResponse<PagamentoCriadoDto>
         {
             StatusCode = response.StatusCode,

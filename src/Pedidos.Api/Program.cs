@@ -15,6 +15,11 @@ Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseKestrel(options =>
+{
+    options.ListenAnyIP(5000);
+});
+
 builder.Services
     .ConfigureObservability()
     .ConfigureJsonSerialization()

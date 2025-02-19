@@ -25,8 +25,8 @@ internal class PedidoTypeConfiguration : IEntityTypeConfiguration<Pedido>
         {
             pagamento.Property(p => p.Id).HasColumnName("PagamentoId");
             pagamento.Property(p => p.UrlPagamento).HasColumnName("UrlPagamento");
-            pagamento.Property(p => p.Status).HasColumnName("PagamentoStatus")
-                .HasConversion(fromObj => Convert.ToInt32(fromObj), fromDb => (StatusPagamento)fromDb);
+            pagamento.Property(p => p.Status).HasColumnName("PagamentoStatus").IsRequired(false)
+                .HasConversion(fromObj => Convert.ToInt32(fromObj) , fromDb => (StatusPagamento)fromDb);
         });
     }
 }

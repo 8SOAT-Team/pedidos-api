@@ -27,8 +27,23 @@ public class PedidoHandler(IPedidoGateway pedidoGateway) : IPedidoHandler
         var pedido = await pedidoGateway.IniciarPagamentoAsync(new NovoPagamentoDto
         {
             PedidoId = domainEvent.PedidoId,
-            ValorTotal = domainEvent.ValorTotal,
-            EmailPagador = domainEvent.Cliente?.Email.Address
+            MetodoDePagamento = (MetodosDePagamento)domainEvent.MetodoDePagamento,
+            Itens = domainEvent.Itens.Select(x => new NovoPagamentoItemRequest
+            {
+                Id = x.Id,
+                Titulo = x.Produto.Nome,
+                Descricao = x.Produto.Descricao,
+                Quantidade = x.Quantidade,
+                PrecoUnitario = x.Produto.Preco,
+            }).ToList(),
+            Pagador = domainEvent.Cliente is not null
+                ? new NovoPagamentoPagadorRequest
+                {
+                    Email = domainEvent.Cliente.Email,
+                    Nome = domainEvent.Cliente.Nome,
+                    Cpf = domainEvent.Cliente.Cpf
+                }
+                : null
         });
 
         return Result<Pedido>.Succeed(pedido);

@@ -106,7 +106,7 @@ public class Pedido : Entity, IAggregateRoot
         DomainExceptionValidation.When(StatusPedido != StatusInicial,
             $"Status do pedido não permite confirmação. O status deve ser {StatusPedido.Recebido} para realizar a confirmação.");
 
-        RaiseEvent(new PedidoConfirmado(Id, ValorTotal, metodoDePagamento, Cliente));
+        RaiseEvent(new PedidoConfirmado(Id,metodoDePagamento, Cliente!, ItensDoPedido.ToList()));
     }
 
     public void PagamentoCriado(Guid pagamentoId, string urlPagamento)
