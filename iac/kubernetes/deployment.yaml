@@ -19,22 +19,21 @@ spec:
       - name: pedidos-api-cont
         image: sickbanger/pedidos-api:latest
         ports:
-        - containerPort: 5118
-        - containerPort: 7163
+        - containerPort: 5000
         envFrom:
           - configMapRef:
               name: pedidos-api-configmap
         livenessProbe:
           httpGet:
             path: /health
-            port: 5118
+            port: 5000
           initialDelaySeconds: 60
           periodSeconds: 10
           failureThreshold: 5
         readinessProbe:
           httpGet:
             path: /health
-            port: 5118
+            port: 5000
           initialDelaySeconds: 40
           periodSeconds: 5
           failureThreshold: 3
