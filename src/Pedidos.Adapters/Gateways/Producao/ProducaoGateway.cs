@@ -1,5 +1,6 @@
 ﻿using Pedidos.Adapters.Gateways.Producao.Dtos;
 using Pedidos.Adapters.Gateways.WebApis;
+using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Domain.Pedidos.Entities;
 using ProducaoNovoPedidoDto = Pedidos.Adapters.Gateways.Producao.Dtos.ProducaoNovoPedidoDto;
 
@@ -15,7 +16,8 @@ public class ProducaoGateway(IProducaoApi producaoApi) : IProducaoGateway
             PedidoId = pedido.Id,
             ItensDoPedido = pedido.ItensDoPedido.Select(i => new NovoItemDePedidoRequest
             {
-                ProdutoId = i.ProdutoId,
+                Nome = i.Produto.Nome,
+                Categoria = (ProdutoCategoria)i.Produto.Categoria,
                 Quantidade = i.Quantidade
             }).ToList()
         };

@@ -74,7 +74,7 @@ public class PedidoGateway(
 
     public async Task<Pedido> IniciarProducao(Guid pedidoId)
     {
-        var pedido = await GetByIdAsync(pedidoId);
+        var pedido = await GetPedidoCompletoAsync(pedidoId);
         var response = await producaoGateway.IniciarProducaoAsync(pedido!);
 
         DomainExceptionValidation.When(response.IsSuccessStatusCode is false,

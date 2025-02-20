@@ -1,26 +1,28 @@
 ﻿using Pedidos.Domain.Pedidos.Enums;
 using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Produtos.Enums;
 
 namespace Pedidos.Adapters.Gateways.Producao.Dtos;
 
 [ExcludeFromCodeCoverage]
 public record ProducaoNovoPedidoDto
 {
-    public Guid? PedidoId { get; init; }
+    public Guid PedidoId { get; init; }
     public List<NovoItemDePedidoRequest> ItensDoPedido { get; init; } = null!;
 }
 
 [ExcludeFromCodeCoverage]
 public record NovoPedidoRequest
 {
-    public Guid? PedidoId { get; init; }
+    public Guid PedidoId { get; init; }
     public List<NovoItemDePedidoRequest> ItensDoPedido { get; init; } = null!;
 }
 
 [ExcludeFromCodeCoverage]
 public record NovoItemDePedidoRequest
 {
-    public Guid ProdutoId { get; init; }
+    public string Nome { get; init; }
+    public ProdutoCategoria Categoria { get; set; }
     public int Quantidade { get; init; }
 }
 

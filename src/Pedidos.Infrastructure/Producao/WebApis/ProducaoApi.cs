@@ -5,7 +5,7 @@ using Pedidos.Adapters.Gateways.WebApis;
 
 namespace Pedidos.Infrastructure.Producao.WebApis;
 
-public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
+public class ProducaoApi(IProducaoWebApi producaoApi) : IProducaoApi
 {  
     public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(ProducaoNovoPedidoDto dto)
     {
@@ -14,7 +14,8 @@ public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
             PedidoId = dto.PedidoId,
             ItensDoPedido = dto.ItensDoPedido.Select(i => new NovoItemDePedidoRequest
             {
-                ProdutoId = i.ProdutoId,
+                Nome = i.Nome,
+                Categoria = i.Categoria,
                 Quantidade = i.Quantidade
             }).ToList()
         };
