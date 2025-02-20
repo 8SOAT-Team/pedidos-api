@@ -5,5 +5,5 @@ namespace Pedidos.Adapters.Gateways.Producao;
 
 public interface IProducaoApi
 {
-    Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(NovoPedidoDto dto);
+    Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(ProducaoNovoPedidoDto dto);
 }

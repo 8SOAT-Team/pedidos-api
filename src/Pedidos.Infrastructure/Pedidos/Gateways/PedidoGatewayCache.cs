@@ -36,6 +36,11 @@ public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cach
     }
 
     public Task<Pedido> IniciarPagamentoAsync(NovoPagamentoDto dto) => nextExecution.IniciarPagamentoAsync(dto);
+    
+    public Task<Pedido> IniciarProducao(Guid pedidoId)
+    {
+        return nextExecution.IniciarProducao(pedidoId);
+    }
 
     public async Task<Pedido> CreateAsync(Pedido pedido)
     {

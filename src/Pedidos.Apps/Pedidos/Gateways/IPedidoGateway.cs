@@ -12,4 +12,6 @@ public interface IPedidoGateway
     Task<Pedido?> GetPedidoCompletoAsync(Guid id);
     Task<Pedido> AtualizarPedidoPagamentoIniciadoAsync(Pedido pedido);
     Task<Pedido> IniciarPagamentoAsync(NovoPagamentoDto dto);
+
+    Task<Pedido> IniciarProducao(Guid pedidoId);
 }

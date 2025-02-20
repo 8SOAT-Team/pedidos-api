@@ -7,7 +7,7 @@ namespace Pedidos.Infrastructure.Producao.WebApis;
 
 public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
 {  
-    public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(NovoPedidoDto dto)
+    public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(ProducaoNovoPedidoDto dto)
     {
         var request = new NovoPedidoRequest
         {
@@ -37,8 +37,5 @@ public class ProducaoWebApi(IProducaoWebApi producaoApi) : IProducaoApi
                 ValorTotal = response.Content.ValorTotal
             }
         };
-
     }
-
-    
 }

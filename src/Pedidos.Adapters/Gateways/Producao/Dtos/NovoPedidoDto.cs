@@ -1,9 +1,10 @@
 ﻿using Pedidos.Domain.Pedidos.Enums;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Pedidos.Adapters.Gateways.Producao.Dtos;//
+namespace Pedidos.Adapters.Gateways.Producao.Dtos;
+
 [ExcludeFromCodeCoverage]
-public record NovoPedidoDto
+public record ProducaoNovoPedidoDto
 {
     public Guid? PedidoId { get; init; }
     public List<NovoItemDePedidoRequest> ItensDoPedido { get; init; } = null!;
@@ -44,11 +45,4 @@ public record ItemDoPedidoResponse
     public Guid ProdutoId { get; init; }
     public int Quantidade { get; init; }
     public string Imagem { get; init; } = null!;
-}
-
-[ExcludeFromCodeCoverage]
-public record NovoItemDePedido
-{
-    public Guid ProdutoId { get; init; }
-    public int Quantidade { get; init; }
 }
