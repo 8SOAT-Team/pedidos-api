@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pedidos.Adapters.Gateways.Pagamentos;
+using Pedidos.Adapters.Gateways.Producao;
 using Pedidos.Apps.Pedidos.Gateways;
+using Pedidos.Domain.Exceptions;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
-public class PedidoGateway(FastOrderContext dbContext, IPagamentoGateway pagamentoGateway) : IPedidoGateway
+public class PedidoGateway(
+    FastOrderContext dbContext,
+    IPagamentoGateway pagamentoGateway,
+    IProducaoGateway producaoGateway) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)
     {
@@ -61,9 +66,20 @@ public class PedidoGateway(FastOrderContext dbContext, IPagamentoGateway pagamen
         {
             throw new ApplicationException("Pedido não encontrado");
         }
-         
+
         var pagamentoResult = await pagamentoGateway.IniciarPagamentoAsync(dto, pedido);
-        
+
         return pagamentoResult.IsSucceed ? pagamentoResult.Value! : pedido;
+    }
+
+    public async Task<Pedido> IniciarProducao(Guid pedidoId)
+    {
+        var pedido = await GetPedidoCompletoAsync(pedidoId);
+        var response = await producaoGateway.IniciarProducaoAsync(pedido!);
+
+        DomainExceptionValidation.When(response.IsSuccessStatusCode is false,
+            $"Erro ao iniciar produção: {response.StatusCode}");
+
+        return pedido!;
     }
 }

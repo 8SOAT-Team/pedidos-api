@@ -12,6 +12,7 @@ public static class EnvConfig
     public static bool RunMigrationsOnStart => EnvConfigValueGetter.GetBool("RUN_MIGRATIONS_ON_START");
 
     public static string PagamentoWebApiUrl => EnvConfigValueGetter.MustGetString("PAGAMENTO_WEB_API_URL");
+    public static string ProducaoWebApiUrl => EnvConfigValueGetter.MustGetString("PRODUCAO_WEB_API_URL");
     
     private static class EnvConfigValueGetter
     {

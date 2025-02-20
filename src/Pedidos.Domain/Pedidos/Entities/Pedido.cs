@@ -54,19 +54,26 @@ public class Pedido : Entity, IAggregateRoot
         DomainExceptionValidation.When(itens.Count <= 0, "O pedido deve conter pelo menos um item");
     }
 
-    public Pedido IniciarPreparo(Pagamento pagamento = null!)
+    public void IniciarPreparo(StatusPagamento statusPagamento)
     {
-        DomainExceptionValidation.When(pagamento.Status is not StatusPagamento.Autorizado,
+        DomainExceptionValidation.When(Pagamento is null, $"Não é possível iniciar o preparo sem um {nameof(Pagamento)} iniciado.");
+        
+        DomainExceptionValidation.When(statusPagamento is not StatusPagamento.Autorizado,
             $"O pagamento deve estar {StatusPagamento.Autorizado} para iniciar o preparo.");
-
-        DomainExceptionValidation.When(pagamento.Id.Equals(Guid.Empty), $"id de pagamento inválido: ${pagamento.Id}");
 
         DomainExceptionValidation.When(StatusPedido != StatusPedido.Recebido,
             $"Status do pedido não permite iniciar preparo. O status deve ser {StatusPedido.Recebido} para iniciar o preparo.");
 
+        Pagamento!.AtualizarStatus(statusPagamento);
+
+        if (Pagamento.EstaAutorizado() is false)
+        {
+            return;
+        }
+        
         StatusPedido = StatusPedido.EmPreparacao;
+        
         RaiseEvent(new PedidoEmPreparacao(Id));
-        return this;
     }
 
     public Pedido FinalizarPreparo()

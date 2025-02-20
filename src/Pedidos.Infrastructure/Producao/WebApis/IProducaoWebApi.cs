@@ -4,6 +4,6 @@ using Refit;
 namespace Pedidos.Infrastructure.Producao.WebApis;
 public interface IProducaoWebApi
 {
-    [Post("/producao/pedido")]
+    [Post("/v1/pedido")]
     public Task<ApiResponse<PedidoResponse>> IniciarProducao(NovoPedidoRequest request);
 }

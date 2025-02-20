@@ -1,34 +1,27 @@
 ﻿using Pedidos.Adapters.Gateways.Producao.Dtos;
 using Pedidos.Adapters.Gateways.WebApis;
-using Pedidos.Apps.Pedidos.Gateways;
-using Pedidos.Apps.Producoes.Gateways;
+using Pedidos.Apps.Produtos.Enums;
+using Pedidos.Domain.Pedidos.Entities;
+using ProducaoNovoPedidoDto = Pedidos.Adapters.Gateways.Producao.Dtos.ProducaoNovoPedidoDto;
 
 
 namespace Pedidos.Adapters.Gateways.Producao;
-public class ProducaoGateway: IProducaoGateway
+
+public class ProducaoGateway(IProducaoApi producaoApi) : IProducaoGateway
 {
-    private readonly IProducaoApi _producaoApi;
-    private readonly IPedidoGateway _pedidoGateway;
-
-    public ProducaoGateway(IProducaoApi producaoApi, IPedidoGateway pedidoGateway)
+    public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(Pedido pedido)
     {
-        _producaoApi = producaoApi;
-        _pedidoGateway = pedidoGateway;
-    }
-
-    public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(Guid pedidoId)
-    {
-        var pedido = await _pedidoGateway.GetPedidoCompletoAsync(pedidoId);
-        var novoPedidoDto = new NovoPedidoDto
+        var novoPedidoDto = new ProducaoNovoPedidoDto
         {
-             PedidoId= pedido!.Id,
+            PedidoId = pedido.Id,
             ItensDoPedido = pedido.ItensDoPedido.Select(i => new NovoItemDePedidoRequest
             {
-                ProdutoId = i.ProdutoId,
+                Nome = i.Produto.Nome,
+                Categoria = (ProdutoCategoria)i.Produto.Categoria,
                 Quantidade = i.Quantidade
             }).ToList()
         };
-        var response= await _producaoApi.IniciarProducaoAsync(novoPedidoDto);
+        var response = await producaoApi.IniciarProducaoAsync(novoPedidoDto);
 
         return new ApiResponse<PedidoResponse>
         {
@@ -39,11 +32,7 @@ public class ProducaoGateway: IProducaoGateway
                 StatusPedido = response.Content.StatusPedido,
                 DataPedido = response.Content.DataPedido,
                 ValorTotal = response.Content.ValorTotal
-
             }
         };
     }
-
-    
 }
-

@@ -12,4 +12,5 @@ public interface IPedidoController
     Task<Result<List<PedidoDto>>> GetAllPedidosPending();
     Task<Result<PedidoDto>> AtualizarStatusDePreparacaoDoPedido(StatusPedido status, Guid pedidoId);
     Task<Result<PedidoConfirmadoDto>> ConfirmarPedido(Guid pedidoId, MetodoDePagamento metodoDePagamento);
+    Task<Result<PedidoDto>> AtualizarStatusPagamento(Guid pedidoId, StatusPagamento statusPagamento);
 }

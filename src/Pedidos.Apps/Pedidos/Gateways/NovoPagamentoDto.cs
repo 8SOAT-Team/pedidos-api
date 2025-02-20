@@ -1,4 +1,6 @@
-﻿namespace Pedidos.Apps.Pedidos.Gateways;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Pedidos.Apps.Pedidos.Gateways;
 
 public enum MetodosDePagamento
 {
@@ -30,3 +32,4 @@ public record NovoPagamentoPagadorRequest
     public string Nome { get; init; }
     public string Cpf { get; init; }
 }
+

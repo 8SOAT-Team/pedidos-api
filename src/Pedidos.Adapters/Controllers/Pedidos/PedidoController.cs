@@ -114,4 +114,18 @@ public class PedidoController(
             .AdaptUsing(PedidoPresenter.ToPedidoDto)
             .Build();
     }
+
+    public async Task<Result<PedidoDto>> AtualizarStatusPagamento(Guid pedidoId, StatusPagamento statusPagamento)
+    {
+        var useCase = new AtualizarPagamentoPedidoUseCase(logger.CreateLogger<AtualizarPagamentoPedidoUseCase>(),
+            pedidoGateway, pedidoHandler);
+
+        var useCaseResult = await useCase.ResolveAsync(new AtualizarStatusPagamentoDto(pedidoId, statusPagamento));
+
+        return ControllerResultBuilder<PedidoDto, Pedido>
+            .ForUseCase(useCase)
+            .WithResult(useCaseResult)
+            .AdaptUsing(PedidoPresenter.ToPedidoDto)
+            .Build();
+    }
 }

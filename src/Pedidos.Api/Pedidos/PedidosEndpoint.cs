@@ -27,7 +27,7 @@ public static class PedidosEndpoint
                 pedidoCriado.Match(
                     p => result = Results.Created($"/pedido/{p.Id}", p),
                     errors => result = pedidoCriado.GetFailureResult());
-                
+
                 return result;
             }).WithTags(pedidoTag)
             .Produces<PedidoDto>((int)HttpStatusCode.Created)
@@ -90,7 +90,7 @@ public static class PedidosEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Atualize o status de um pedido")
             .WithOpenApi();
-        
+
         group.MapPatch("/pedido/{id:guid}/confirmacao", async (
                 [FromHeader(Name = Constants.IdempotencyHeaderKey)]
                 Guid? idempotencyKey,
@@ -105,6 +105,29 @@ public static class PedidosEndpoint
             .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.NotFound)
             .WithSummary("Confirme o pedido e inicie o pagamento")
+            .WithOpenApi();
+
+        group.MapPost("/pedido/{pedidoId:guid}/status-pagamento", async (
+                [FromHeader(Name = Constants.IdempotencyHeaderKey)]
+                Guid? idempotencyKey,
+                [FromRoute] Guid pedidoId,
+                [FromBody] AtualizaPedidoStatusPagamentoRequest request,
+                [FromServices] IPedidoController pedidoController) =>
+            {
+                var pedidoCriado = await pedidoController.AtualizarStatusPagamento(pedidoId, request.Status);
+
+                IResult result = null!;
+
+                pedidoCriado.Match(
+                    p => result = Results.Created($"/pedido/{p.Id}", p),
+                    errors => result = pedidoCriado.GetFailureResult());
+
+                return result;
+            }).WithTags(pedidoTag)
+            .Produces<PedidoDto>((int)HttpStatusCode.Created)
+            .Produces<AppBadRequestProblemDetails>((int)HttpStatusCode.BadRequest)
+            .Produces((int)HttpStatusCode.NotFound)
+            .WithSummary("Crie um pedido informando os itens.")
             .WithOpenApi();
     }
 }

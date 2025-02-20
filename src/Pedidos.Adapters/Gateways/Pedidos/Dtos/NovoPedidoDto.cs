@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Pedidos.Adapters.Gateways.Pedido.Dtos;
+namespace Pedidos.Adapters.Gateways.Pedidos.Dtos;
 [ExcludeFromCodeCoverage]
 public record NovoPedidoDto
 {
