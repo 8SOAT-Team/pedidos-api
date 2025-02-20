@@ -1,10 +1,9 @@
 ﻿using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Types.Results;
-using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Adapters.Gateways.Pagamentos;
 
 public interface IPagamentoGateway
 {
-    public Task<Result<Pedido>> IniciarPagamentoAsync(NovoPagamentoDto dto, Pedido pedido);
+    public Task<Result<Pedidos.Domain.Pedidos.Entities.Pedido>> IniciarPagamentoAsync(NovoPagamentoDto dto, Pedidos.Domain.Pedidos.Entities.Pedido pedido);
 }
