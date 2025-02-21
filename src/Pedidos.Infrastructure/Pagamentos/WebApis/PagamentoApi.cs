@@ -30,7 +30,7 @@ public class PagamentoApi(IPagamentoWebApi pagamentoWebApi) : IPagamentoApi
                 Titulo = x.Titulo,
                 Descricao = x.Descricao,
                 Quantidade = x.Quantidade,
-                PrecoUnitario = x.PrecoUnitario,
+                PrecoUnitario = x.PrecoUnitario
             }).ToList()
         };
 
