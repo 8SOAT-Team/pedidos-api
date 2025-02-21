@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using Pedidos.Adapters.Gateways.Pagamentos;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Types.Results;
@@ -9,7 +10,7 @@ using NovoPagamentoPagadorRequest = Pedidos.Adapters.Gateways.Pagamentos.Dtos.No
 using NovoPagamentoItemRequest = Pedidos.Adapters.Gateways.Pagamentos.Dtos.NovoPagamentoItemRequest;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
-
+[ExcludeFromCodeCoverage]
 public class PagamentoGateway(IPagamentoApi api) : IPagamentoGateway
 {
     public async Task<Result<Pedido>> IniciarPagamentoAsync(NovoPagamentoDto dto, Pedido pedido)

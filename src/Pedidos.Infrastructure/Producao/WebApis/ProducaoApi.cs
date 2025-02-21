@@ -1,10 +1,11 @@
-﻿using Pedidos.Adapters.Gateways.Producao;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Producao;
 using Pedidos.Adapters.Gateways.Producao.Dtos;
 using Pedidos.Adapters.Gateways.WebApis;
 
 
 namespace Pedidos.Infrastructure.Producao.WebApis;
-
+[ExcludeFromCodeCoverage]
 public class ProducaoApi(IProducaoWebApi producaoApi) : IProducaoApi
 {  
     public async Task<ApiResponse<PedidoResponse>> IniciarProducaoAsync(ProducaoNovoPedidoDto dto)

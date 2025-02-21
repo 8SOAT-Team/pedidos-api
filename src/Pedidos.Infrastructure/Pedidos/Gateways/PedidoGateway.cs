@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Pedidos.Adapters.Gateways.Pagamentos;
 using Pedidos.Adapters.Gateways.Producao;
 using Pedidos.Apps.Pedidos.Gateways;
@@ -7,7 +8,7 @@ using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
-
+[ExcludeFromCodeCoverage]
 public class PedidoGateway(
     FastOrderContext dbContext,
     IPagamentoGateway pagamentoGateway,

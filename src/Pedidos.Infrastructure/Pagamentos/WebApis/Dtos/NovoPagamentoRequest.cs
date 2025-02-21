@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using Pedidos.Adapters.Controllers.Pedidos.Enums;
 using Pedidos.Adapters.Gateways.Pagamentos.Enums;
 
 namespace Pedidos.Infrastructure.Pagamentos.WebApis.Dtos;
-
+[ExcludeFromCodeCoverage]
 public record NovoPagamentoRequest
 {
     public Guid PedidoId { get; init; }

@@ -1,10 +1,11 @@
-﻿using Pedidos.Adapters.Gateways.Caches;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Caches;
 using Pedidos.Apps.Clientes.Gateways;
 using Pedidos.Domain.Clientes.Entities;
 using Pedidos.Domain.ValueObjects;
 
 namespace Pedidos.Infrastructure.Clientes.Gateways;
-
+[ExcludeFromCodeCoverage]
 public record ClienteKey(string? Cpf = null);
 
 public class ClienteGatewayCache(IClienteGateway nextExecution, ICacheContext cache)

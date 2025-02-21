@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Pedidos.Domain.Clientes.Entities;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Produtos.Entities;

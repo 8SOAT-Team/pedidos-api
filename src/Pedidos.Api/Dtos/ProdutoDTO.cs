@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Dtos;
-
+[ExcludeFromCodeCoverage]
 public class ProdutoDto
 {
     [DisplayName("Id")] public Guid? Id { get; private set; }

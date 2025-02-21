@@ -1,7 +1,8 @@
-﻿using Pedidos.Apps.Produtos.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Produtos.Enums;
 
 namespace Pedidos.Apps.Produtos.UseCases.DTOs;
-
+[ExcludeFromCodeCoverage]
 public record ProdutoCriadoDto
 {
     public Guid Id { get; init; }

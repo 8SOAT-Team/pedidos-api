@@ -1,5 +1,7 @@
-﻿namespace Pedidos.Adapters.Controllers.Clientes.Dtos;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.Adapters.Controllers.Clientes.Dtos;
+[ExcludeFromCodeCoverage]
 public record ClienteDto
 {
     public Guid Id { get; init; }

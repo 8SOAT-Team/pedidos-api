@@ -1,7 +1,8 @@
-﻿using Pedidos.Adapters.Gateways.Pagamentos.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Pagamentos.Enums;
 
 namespace Pedidos.Adapters.Gateways.Pagamentos.Dtos;
-
+[ExcludeFromCodeCoverage]
 public record NovoPagamentoDto
 {
     public Guid PedidoId { get; init; }
