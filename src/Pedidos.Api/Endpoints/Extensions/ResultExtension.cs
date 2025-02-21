@@ -1,7 +1,9 @@
-﻿using Pedidos.Apps.Types.Results;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Types.Results;
 
 namespace Pedidos.Api.Endpoints.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class ResultExtension
 {
     public static IResult GetResult<T>(this Result<T> result)
