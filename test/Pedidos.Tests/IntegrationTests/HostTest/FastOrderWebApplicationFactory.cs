@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Pedidos.Adapters.Gateways.Pagamentos;
+using Pedidos.Adapters.Gateways.Producao;
 using Pedidos.Infrastructure.Databases;
+using Pedidos.Tests.IntegrationTests.Fakes;
 using Testcontainers.MsSql;
 
 namespace Pedidos.Tests.IntegrationTests.HostTest;
@@ -34,6 +37,12 @@ public class FastOrderWebApplicationFactory : WebApplicationFactory<Program>, IA
     {
         builder.ConfigureServices(services =>
         {
+            services.RemoveAll<IProducaoApi>();
+            services.RemoveAll<IPagamentoApi>();
+
+            services.AddSingleton<IProducaoApi, FakeProducaoApi>();
+            services.AddSingleton<IPagamentoApi, FakePagamentoApi>();
+            
             services.RemoveAll(typeof(DbContextOptions<FastOrderContext>));
 
             services.AddDbContext<FastOrderContext>(options =>
