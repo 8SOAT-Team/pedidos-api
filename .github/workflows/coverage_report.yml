@@ -13,6 +13,8 @@ jobs:
       DISTRIBUTED_CACHE_URL: "redis://localhost:6379"
       ASPNETCORE_ENVIRONMENT: "Test"
       RUN_MIGRATIONS_ON_START: "true"
+      PAGAMENTO_WEB_API_URL: "http://localhost:5271"
+      PRODUCAO_WEB_API_URL: "http://localhost:5118"
 
     steps:
       - name: Checkout code
