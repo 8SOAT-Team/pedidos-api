@@ -12,7 +12,8 @@ jobs:
     env:
       DISTRIBUTED_CACHE_URL: "redis://localhost:6379"
       ASPNETCORE_ENVIRONMENT: "Test"
-      
+      RUN_MIGRATIONS_ON_START: "true"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
