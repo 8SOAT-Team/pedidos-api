@@ -1,5 +1,7 @@
-﻿namespace Pedidos.Adapters.Controllers.Pedidos.Dtos;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.Adapters.Controllers.Pedidos.Dtos;
+[ExcludeFromCodeCoverage]
 public record ItemDoPedidoDto
 {
     public Guid Id { get; init; }

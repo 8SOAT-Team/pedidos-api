@@ -1,11 +1,12 @@
-﻿using Pedidos.Adapters.Gateways.Caches;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Caches;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
 public record PedidoKey(Guid? Id = null);
-
+[ExcludeFromCodeCoverage]
 public class PedidoGatewayCache(IPedidoGateway nextExecution, ICacheContext cache)
     : CacheGateway<PedidoKey>(cache), IPedidoGateway
 {

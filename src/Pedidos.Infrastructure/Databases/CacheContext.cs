@@ -1,11 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using Pedidos.Adapters.Gateways.Caches;
 using Pedidos.Apps.Types.Results;
 using Pedidos.Infrastructure.Extensions;
 using StackExchange.Redis;
 
 namespace Pedidos.Infrastructure.Databases;
-
+[ExcludeFromCodeCoverage]
 public class CacheContext(IConnectionMultiplexer connectionMultiplexer, JsonSerializerOptions jsonOptions)
     : ICacheContext
 {

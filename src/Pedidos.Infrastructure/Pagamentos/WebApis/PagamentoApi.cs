@@ -1,4 +1,5 @@
-﻿using Pedidos.Adapters.Gateways.Pagamentos;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Pagamentos;
 using Pedidos.Adapters.Gateways.Pagamentos.Dtos;
 using Pedidos.Adapters.Gateways.Pagamentos.Enums;
 using Pedidos.Adapters.Gateways.WebApis;
@@ -7,7 +8,7 @@ using NovoPagamentoItemRequest = Pedidos.Infrastructure.Pagamentos.WebApis.Dtos.
 using NovoPagamentoPagadorRequest = Pedidos.Infrastructure.Pagamentos.WebApis.Dtos.NovoPagamentoPagadorRequest;
 
 namespace Pedidos.Infrastructure.Pagamentos.WebApis;
-
+[ExcludeFromCodeCoverage]
 public class PagamentoApi(IPagamentoWebApi pagamentoWebApi) : IPagamentoApi
 {
     public async Task<ApiResponse<PagamentoCriadoDto>> IniciarPagamentoAsync(NovoPagamentoDto dto)

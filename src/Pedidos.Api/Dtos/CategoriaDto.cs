@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Dtos;
-
+[ExcludeFromCodeCoverage]
 public class CategoriaDto
 {
     public CategoriaDto(Guid? id, string nome, string descricao)
