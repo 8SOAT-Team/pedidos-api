@@ -1,12 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Apps.Pedidos.Gateways;
-
 public enum MetodosDePagamento
 {
     Pix = 0,
 }
-
+[ExcludeFromCodeCoverage]
 public record NovoPagamentoDto
 {
     public Guid PedidoId { get; init; }
@@ -16,7 +16,7 @@ public record NovoPagamentoDto
 
     public NovoPagamentoPagadorRequest? Pagador { get; init; }
 };
-
+[ExcludeFromCodeCoverage]
 public record NovoPagamentoItemRequest
 {
     public Guid Id { get; init; }
@@ -25,7 +25,7 @@ public record NovoPagamentoItemRequest
     public int Quantidade { get; init; }
     public decimal PrecoUnitario { get; init; }
 }
-
+[ExcludeFromCodeCoverage]
 public record NovoPagamentoPagadorRequest
 {
     public string Email { get; init; }
