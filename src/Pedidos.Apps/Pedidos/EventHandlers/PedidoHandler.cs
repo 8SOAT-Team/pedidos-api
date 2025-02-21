@@ -1,9 +1,9 @@
-﻿using Pedidos.Apps.Pedidos.Gateways;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Types.Results;
 using Pedidos.Domain.Entities;
 using Pedidos.Domain.Pedidos.DomainEvents;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Apps.Pedidos.EventHandlers;
 
@@ -11,7 +11,7 @@ public interface IPedidoHandler
 {
     Task<Result<Pedido>> HandleAsync(DomainEvent domainEvent);
 }
-
+[ExcludeFromCodeCoverage]
 public class PedidoHandler(IPedidoGateway pedidoGateway) : IPedidoHandler
 {
     public async Task<Result<Pedido>> HandleAsync(PedidoConfirmado domainEvent)

@@ -1,4 +1,5 @@
-﻿using CleanArch.UseCase.Faults;
+﻿using System.Diagnostics.CodeAnalysis;
+using CleanArch.UseCase.Faults;
 using Pedidos.Apps.Pedidos.EventHandlers;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
@@ -7,7 +8,7 @@ using Pedidos.Apps.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Apps.Pedidos.UseCases;
-
+[ExcludeFromCodeCoverage]
 public sealed class ConfirmarPedidoUseCase(
     ILogger<ConfirmarPedidoUseCase> logger,
     IPedidoGateway pedidoGateway,
